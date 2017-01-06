@@ -1,6 +1,7 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use ShoppingFeed\Paginator\Adapter\CurrentPageAwareInterface;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
@@ -64,6 +65,10 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         }
 
         $this->currentPage = $number;
+
+        if ($this->adapter instanceof CurrentPageAwareInterface) {
+            $this->adapter->setCurrentPage($number);
+        }
 
         return $this;
     }

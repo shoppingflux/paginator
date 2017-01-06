@@ -1,8 +1,10 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use ShoppingFeed\Paginator\Adapter\AbstractPaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\InPlacePaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
+use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
 /**
  * @group paginator
@@ -176,6 +178,17 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $instance->setItemsPerPage(20);
         $instance->setCurrentPage($currentPage);
         $this->assertSame($expectedPage, $instance->getPrevPage());
+    }
+
+    public function testSetCurrentPageWithCurrentPageAwareAdapter()
+    {
+        $mock = $this->createMock(AbstractPaginatorAdapter::class);
+        $mock
+            ->expects($this->once())
+            ->method('setCurrentPage')
+        ;
+
+        new Paginator($mock);
     }
 
     public function prevPageDataProvider()
