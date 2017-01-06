@@ -3,8 +3,13 @@ namespace ShoppingFeed\Paginator\Adapter;
 
 use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
-abstract class AbstractPaginatorAdapter implements PaginatorAdapterInterface
+abstract class AbstractPaginatorAdapter implements PaginatorAdapterInterface, CurrentPageAwareInterface
 {
+    /**
+     * @var AbsoluteInt
+     */
+    private $currentPage;
+
     /**
      * @var AbsoluteInt
      */
@@ -34,6 +39,22 @@ abstract class AbstractPaginatorAdapter implements PaginatorAdapterInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCurrentPage(AbsoluteInt $page)
+    {
+        $this->currentPage = $page;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getCurrentPage()
+    {
+        return $this->currentPage->toInt();
     }
 
     /**
