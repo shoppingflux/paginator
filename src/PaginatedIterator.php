@@ -2,9 +2,8 @@
 namespace ShoppingFeed\Paginator;
 
 use ShoppingFeed\Iterator\AbstractIterator;
-use ShoppingFeed\Iterator\IteratorInterface;
 
-class PaginatedIterator extends AbstractIterator implements PaginatorInterface, IteratorInterface
+class PaginatedIterator extends AbstractIterator implements PaginatorInterface
 {
     /**
      * @var PaginatorInterface
@@ -95,6 +94,14 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface, 
     public function getPrevPage()
     {
         return $this->paginator->getPrevPage();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTotalPages()
+    {
+        return $this->paginator->getTotalPages();
     }
 
     /**

@@ -53,4 +53,9 @@ interface PaginatorInterface extends IteratorInterface, \Countable
      * @return integer|null Null if the current page is the first one
      */
     public function getPrevPage();
+
+    /**
+     * @return int The number of pages
+     */
+    public function getTotalPages();
 }

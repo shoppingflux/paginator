@@ -28,13 +28,15 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     private $itemsPerPage;
 
     /**
-     * @param PaginatorAdapterInterface $adapter
+     * @param PaginatorAdapterInterface $adapter        Paginator adapter
+     * @param int                       $perPage        Default number of elements to fetch per page
+     * @param int                       $currentPage    The starting point of the internal iterator
      */
-    public function __construct(PaginatorAdapterInterface $adapter)
+    public function __construct(PaginatorAdapterInterface $adapter, $perPage = 10, $currentPage = 1)
     {
         $this->adapter = $adapter;
-        $this->setCurrentPage(1);
-        $this->setItemsPerPage(10);
+        $this->setCurrentPage((int) $currentPage);
+        $this->setItemsPerPage((int) $perPage);
     }
 
     /**
@@ -145,7 +147,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
      */
     public function count()
     {
-        return (int) ceil($this->getTotalCount() / $this->getItemsPerPage());
+        return $this->getTotalPages();
     }
 
     /**
@@ -168,6 +170,18 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         if ($prev > 0) {
             return $prev;
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTotalPages()
+    {
+        if (! $numberOfItems = $this->getTotalCount()) {
+            return 0;
+        }
+
+        return (int) ceil($numberOfItems / $this->getItemsPerPage());
     }
 
     /**

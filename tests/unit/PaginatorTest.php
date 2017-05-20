@@ -4,7 +4,6 @@ namespace ShoppingFeed\Paginator;
 use ShoppingFeed\Paginator\Adapter\AbstractPaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\InPlacePaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
-use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
 /**
  * @group paginator
@@ -180,6 +179,18 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedPage, $instance->getPrevPage());
     }
 
+    public function prevPageDataProvider()
+    {
+        return [
+            [5, 4],
+            [4, 3],
+            [3, 2],
+            [2, 1],
+            [1, null],
+            [0, null]
+        ];
+    }
+
     public function testSetCurrentPageWithCurrentPageAwareAdapter()
     {
         $mock = $this->createMock(AbstractPaginatorAdapter::class);
@@ -191,15 +202,29 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         new Paginator($mock);
     }
 
-    public function prevPageDataProvider()
+    /**
+     * @dataProvider providesElementsForTotalCount
+     */
+    public function testGetTotalCountOfPages($perPage, $itemCount, $totalPages)
+    {
+        $mock = $this->createMock(PaginatorAdapterInterface::class);
+        $mock
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn($itemCount);
+
+        $paginator = new Paginator($mock, $perPage);
+        $this->assertSame($totalPages, $paginator->getTotalPages());
+    }
+
+    public function providesElementsForTotalCount()
     {
         return [
-            [5, 4],
-            [4, 3],
-            [3, 2],
-            [2, 1],
-            [1, null],
-            [0, null]
+            [10, 0, 0],
+            [10, 1, 1],
+            [10, 9, 1],
+            [10, 10, 1],
+            [10, 11, 2],
         ];
     }
 }
