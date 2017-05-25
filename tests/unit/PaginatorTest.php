@@ -110,21 +110,6 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, iterator_to_array($this->instance));
     }
 
-    public function testGetIteratorWithEmbeddedProcessor()
-    {
-        $this->adapter
-            ->expects($this->once())
-            ->method('getIterator')
-            ->willReturn(new \ArrayIterator([1, 2]))
-        ;
-
-        $this->instance->setProcessor(function() {
-            return 3;
-        });
-
-        $this->assertSame([3, 3], iterator_to_array($this->instance));
-    }
-
     public function testCountReturnTheTotalNumberOfPages()
     {
         $this->adapter
@@ -228,16 +213,15 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testAddFilter()
+    public function testAddFilterIsFluent()
     {
         $this->assertSame(
             $this->instance,
             $this->instance->addFilter('is_array')
         );
-        $this->assertSame('is_array', $this->instance->getProcessor());
     }
 
-    public function testFiltersAreInvoked()
+    public function testFiltersAreAppliedOnIterations()
     {
         $this->instance->addFilter(function($item) {
             return $item + 1;

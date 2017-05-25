@@ -183,30 +183,6 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     }
 
     /**
-     * @deprecated will be removed in v3
-     *
-     * @return callable
-     */
-    public function getProcessor()
-    {
-        return reset($this->processors);
-    }
-
-    /**
-     * @deprecated will be removed in v3, uses addProcessor() instead
-     *
-     * @param callable $processor
-     *
-     * @return $this
-     */
-    public function setProcessor(callable $processor)
-    {
-        $this->processors = [$processor];
-
-        return $this;
-    }
-
-    /**
      * @inheritDoc
      */
     public function addFilter(callable $processor)
