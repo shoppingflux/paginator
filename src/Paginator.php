@@ -1,16 +1,14 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use ShoppingFeed\Iterator\FilterAggregateAwareTrait;
 use ShoppingFeed\Paginator\Adapter\CurrentPageAwareInterface;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
 class Paginator implements PaginationProviderInterface, PaginatorInterface
 {
-    /**
-     * @var callable[]
-     */
-    private $processors = [];
+    use FilterAggregateAwareTrait;
 
     /**
      * @var PaginatorAdapterInterface
@@ -113,8 +111,8 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     {
         $this->paginate();
         foreach ($this->adapter as $item) {
-            foreach ($this->processors as $processor) {
-                $item = $processor($item);
+            foreach ($this->filters as $filter) {
+                $item = $filter($item);
             }
             yield $item;
         }
@@ -145,7 +143,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
      */
     public function count()
     {
-        return $this->getTotalPages();
+        return $this->getTotalCount();
     }
 
     /**
@@ -154,7 +152,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     public function getNextPage()
     {
         $current = $this->getCurrentPage();
-        if ($current < $this->count()) {
+        if ($current < $this->getTotalPages()) {
             return $current + 1;
         }
     }
@@ -180,16 +178,6 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         }
 
         return (int) ceil($numberOfItems / $this->getItemsPerPage());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addFilter(callable $processor)
-    {
-        $this->processors[] = $processor;
-
-        return $this;
     }
 
     /**

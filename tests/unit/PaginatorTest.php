@@ -124,7 +124,7 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
             ->willReturn(100)
         ;
 
-        $this->assertSame(10, count($this->instance));
+        $this->assertSame(100, count($this->instance));
     }
 
     /**

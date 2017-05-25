@@ -104,7 +104,7 @@ class PaginatedIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $this->adapter
             ->expects($this->once())
-            ->method('count')
+            ->method('getTotalPages')
             ->willReturn($total)
         ;
 

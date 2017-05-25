@@ -1,9 +1,10 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use ShoppingFeed\Iterator\FilterAggregateIteratorInterface;
 use ShoppingFeed\Iterator\IteratorInterface;
 
-interface PaginatorInterface extends IteratorInterface, \Countable
+interface PaginatorInterface extends IteratorInterface, FilterAggregateIteratorInterface, \Countable
 {
     /**
      * Define the current page
@@ -58,14 +59,4 @@ interface PaginatorInterface extends IteratorInterface, \Countable
      * @return int The number of pages
      */
     public function getTotalPages();
-
-    /**
-     * Register a processor that performs transformation operation.
-     * The processor will receive items one by one, and are registered in FIFO mode
-     *
-     * @param callable $processor
-     *
-     * @return $this
-     */
-    public function addFilter(callable $processor);
 }
