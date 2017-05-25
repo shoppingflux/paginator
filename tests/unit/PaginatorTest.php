@@ -227,5 +227,30 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
             [10, 11, 2],
         ];
     }
+
+    public function testAddFilter()
+    {
+        $this->assertSame(
+            $this->instance,
+            $this->instance->addFilter('is_array')
+        );
+        $this->assertSame('is_array', $this->instance->getProcessor());
+    }
+
+    public function testFiltersAreInvoked()
+    {
+        $this->instance->addFilter(function($item) {
+            return $item + 1;
+        });
+        $this->instance->addFilter(function($item) {
+            return $item + 1;
+        });
+
+        $this->adapter
+            ->method('getIterator')
+            ->willReturn(new \ArrayIterator([0, 0]));
+
+        $this->assertSame([2, 2], iterator_to_array($this->instance));
+    }
 }
 

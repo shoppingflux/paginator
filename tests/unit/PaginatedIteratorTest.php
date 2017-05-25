@@ -139,5 +139,15 @@ class PaginatedIteratorTest extends \PHPUnit_Framework_TestCase
             [0, 0, 0],
         ];
     }
+
+    public function testAddFilterForwardToInnerPaginator()
+    {
+        $this->adapter
+            ->expects($this->once())
+            ->method('addFilter')
+            ->with('is_array');
+
+        $this->assertSame($this->instance, $this->instance->addFilter('is_array'));
+    }
 }
 

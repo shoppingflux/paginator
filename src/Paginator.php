@@ -8,9 +8,9 @@ use ShoppingFeed\Paginator\Value\AbsoluteInt;
 class Paginator implements PaginationProviderInterface, PaginatorInterface
 {
     /**
-     * @var callable
+     * @var callable[]
      */
-    private $processor;
+    private $processors = [];
 
     /**
      * @var PaginatorAdapterInterface
@@ -112,10 +112,8 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     public function getIterator()
     {
         $this->paginate();
-        $processor = $this->getProcessor();
-
         foreach ($this->adapter as $item) {
-            if (null !== $processor) {
+            foreach ($this->processors as $processor) {
                 $item = $processor($item);
             }
             yield $item;
@@ -185,21 +183,35 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     }
 
     /**
+     * @deprecated will be removed in v3
+     *
      * @return callable
      */
     public function getProcessor()
     {
-        return $this->processor;
+        return reset($this->processors);
     }
 
     /**
+     * @deprecated will be removed in v3, uses addProcessor() instead
+     *
      * @param callable $processor
      *
      * @return $this
      */
     public function setProcessor(callable $processor)
     {
-        $this->processor = $processor;
+        $this->processors = [$processor];
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addFilter(callable $processor)
+    {
+        $this->processors[] = $processor;
 
         return $this;
     }

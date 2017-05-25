@@ -111,4 +111,14 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
     {
         return $this->paginator->count();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function addFilter(callable $processor)
+    {
+        $this->paginator->addFilter($processor);
+
+        return $this;
+    }
 }
