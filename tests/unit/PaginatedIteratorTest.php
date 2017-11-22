@@ -1,6 +1,8 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use ShoppingFeed\Paginator\Exception\BreakIterationException;
+
 /**
  * @group paginator
  * @group library
@@ -148,6 +150,26 @@ class PaginatedIteratorTest extends \PHPUnit_Framework_TestCase
             ->with('is_array');
 
         $this->assertSame($this->instance, $this->instance->addFilter('is_array'));
+    }
+
+    public function testIterationCanBeBrokenWithAppropriateException()
+    {
+        $this->adapter
+            ->expects($this->once())
+            ->method('getIterator')
+            ->willThrowException(new BreakIterationException());
+
+        $this->adapter
+            ->expects($this->once())
+            ->method('getCurrentPage')
+            ->willReturn(1);
+
+        $this->adapter
+            ->expects($this->once())
+            ->method('getTotalPages')
+            ->willReturn(100);
+
+        $this->instance->toArray();
     }
 }
 

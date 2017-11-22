@@ -27,8 +27,12 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
         $totalPages  = $this->getTotalPages();
 
         while($currentPage <= $totalPages) {
-            foreach ($this->paginator as $key => $item) {
-                yield $item;
+            try {
+                foreach ($this->paginator as $key => $item) {
+                    yield $item;
+                }
+            } catch (Exception\BreakIterationException $exception) {
+                break;
             }
 
             if ($currentPage === $totalPages) {
