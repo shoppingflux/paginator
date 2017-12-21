@@ -1,6 +1,6 @@
 <?php
 namespace ShoppingFeed\Paginator\Exception;
 
-class InvalidArgumentException extends \InvalidArgumentException
+class InvalidArgumentException extends \ShoppingFeed\Exception\InvalidArgumentException
 {
 }

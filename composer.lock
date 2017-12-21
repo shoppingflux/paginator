@@ -4,8 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "30aa0750e4ea718540611a0ea08369ab",
+    "content-hash": "362bad7404bde78500e5e41c885273c6",
     "packages": [
+        {
+            "name": "shoppingfeed/exception",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:shoppingflux/exception.git",
+                "reference": "48a84c1a19d22ce7eea6c569d2dc19ee114cad4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shoppingflux/exception/zipball/48a84c1a19d22ce7eea6c569d2dc19ee114cad4e",
+                "reference": "48a84c1a19d22ce7eea6c569d2dc19ee114cad4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ShoppingFeed\\Exception\\": "src/"
+                }
+            },
+            "time": "2017-03-22T16:02:01+00:00"
+        },
         {
             "name": "shoppingfeed/iterator",
             "version": "1.1.0",

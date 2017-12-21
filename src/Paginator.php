@@ -26,6 +26,13 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     private $itemsPerPage;
 
     /**
+     * Cache the adapter count() call by default
+     *
+     * @var int
+     */
+    private $totalCount;
+
+    /**
      * @param PaginatorAdapterInterface $adapter        Paginator adapter
      * @param int                       $perPage        Default number of elements to fetch per page
      * @param int                       $currentPage    The starting point of the internal iterator
@@ -135,7 +142,11 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     {
         $this->paginate();
 
-        return $this->adapter->count();
+        if (null === $this->totalCount) {
+            $this->totalCount = $this->adapter->count();
+        }
+
+        return $this->totalCount;
     }
 
     /**

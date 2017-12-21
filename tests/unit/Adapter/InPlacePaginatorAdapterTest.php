@@ -1,8 +1,32 @@
 <?php
 namespace ShoppingFeed\Paginator\Adapter;
 
+use ShoppingFeed\Paginator\Exception\InvalidArgumentException;
+
 class InPlacePaginatorAdapterTest extends \PHPUnit_Framework_TestCase
 {
+    public function testAcceptArrayAsIterable()
+    {
+        $instance = new InPlacePaginatorAdapter(['foo', 'bar']);
+
+        $this->assertSame(['foo', 'bar'], $instance->toArray());
+    }
+
+    public function testAcceptIteratorAggregateAsIterable()
+    {
+        $instance = new InPlacePaginatorAdapter(
+            new class implements \IteratorAggregate
+            {
+                public function getIterator()
+                {
+                    return new \ArrayIterator(['foo', 'bar']);
+                }
+            }
+        );
+
+        $this->assertSame(['foo', 'bar'], $instance->toArray());
+    }
+
     public function testWithNoLimitTheIteratorCompletesItsIteration()
     {
         $instance = new InPlacePaginatorAdapter(new \ArrayIterator(['foo', 'bar']));
