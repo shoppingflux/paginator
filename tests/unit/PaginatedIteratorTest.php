@@ -1,6 +1,7 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use ShoppingFeed\Paginator\Adapter\InPlacePaginatorAdapter;
 use ShoppingFeed\Paginator\Exception\BreakIterationException;
 
 /**
@@ -170,6 +171,43 @@ class PaginatedIteratorTest extends \PHPUnit_Framework_TestCase
             ->willReturn(100);
 
         $this->instance->toArray();
+    }
+
+    public function testCanBeBuiltFromAdapter()
+    {
+        $expected = range(1, 10);
+        $instance = PaginatedIterator::withAdapter(new InPlacePaginatorAdapter($expected));
+
+        $this->assertSame($expected, $instance->toArray());
+    }
+
+    /**
+     * @dataProvider pageFilterDataProvider
+     */
+    public function testFiltersCanBeAppliedAtBatchLevel($perPage, $expected)
+    {
+        // Starts with 10 items with value = 0
+        $items    = array_fill(0, 3, 0);
+        $instance = PaginatedIterator::withAdapter(new InPlacePaginatorAdapter($items));
+
+        // Increment items values with page number and total count
+        $instance->addPagefilter(function(array $items, $page, $total) {
+            return array_map(function($item) use ($page, $total) {
+                return $item + $page + $total;
+            }, $items);
+        });
+
+        $instance->setItemsPerPage($perPage);
+        $this->assertSame($expected, $instance->toArray());
+    }
+
+    public function pageFilterDataProvider()
+    {
+        return [
+            [3, [2, 2, 2]],
+            [2, [3, 3, 4]],
+            [1, [4, 5, 6]],
+        ];
     }
 }
 

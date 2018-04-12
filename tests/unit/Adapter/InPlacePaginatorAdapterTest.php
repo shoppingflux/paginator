@@ -1,8 +1,6 @@
 <?php
 namespace ShoppingFeed\Paginator\Adapter;
 
-use ShoppingFeed\Paginator\Exception\InvalidArgumentException;
-
 class InPlacePaginatorAdapterTest extends \PHPUnit_Framework_TestCase
 {
     public function testAcceptArrayAsIterable()

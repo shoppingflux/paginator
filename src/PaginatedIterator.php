@@ -2,6 +2,7 @@
 namespace ShoppingFeed\Paginator;
 
 use ShoppingFeed\Iterator\AbstractIterator;
+use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 
 class PaginatedIterator extends AbstractIterator implements PaginatorInterface
 {
@@ -9,6 +10,11 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
      * @var PaginatorInterface
      */
     private $paginator;
+
+    /**
+     * @var callable[]
+     */
+    private $pageFilters = [];
 
     /**
      * @param PaginatorInterface $paginator
@@ -19,6 +25,18 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
     }
 
     /**
+     * Shortcut that allow to build a new instance directly from an adapter instance
+     *
+     * @param PaginatorAdapterInterface $adapter
+     *
+     * @return PaginatedIterator
+     */
+    public static function withAdapter(PaginatorAdapterInterface $adapter)
+    {
+        return new self(new Paginator($adapter));
+    }
+
+    /**
      * @inheritdoc
      */
     public function getIterator()
@@ -26,9 +44,19 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
         $currentPage = $this->getCurrentPage();
         $totalPages  = $this->getTotalPages();
 
-        while($currentPage <= $totalPages) {
+        while ($currentPage <= $totalPages) {
             try {
-                foreach ($this->paginator as $key => $item) {
+                $items = $this->paginator;
+                // When filters at page level, we must run the current paginator iteration and collect results first.
+                // Its done like this because we must avoid to run the same paginator batch more than once,
+                // and by this way prevent extra load from the paginator itself (ie: SQL paginator)
+                if ($this->pageFilters) {
+                    $items = $items->toArray();
+                    foreach ($this->pageFilters as $filter) {
+                        $items = $filter($items, $currentPage, $totalPages);
+                    }
+                }
+                foreach ($items as $item) {
                     yield $item;
                 }
             } catch (Exception\BreakIterationException $exception) {
@@ -126,6 +154,32 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
     public function addFilter(callable $processor)
     {
         $this->paginator->addFilter($processor);
+
+        return $this;
+    }
+
+    /**
+     * Register filter that apply transformation for each data set returned by the inner paginator.
+     * Despite the filter method, this one must expects a traversable (iterable) collection of elements,
+     * where the size is corresponding to the items per page defined for pagination.
+     *
+     * The filter must return an iterable collection of elements, in order to preserve the loop process.
+     *
+     * @param callable $processor A valid callback that will accepts:
+     *                            - (array) $items       : items collection provided by the paginator
+     *                            - (int)   $currentPage : the current page number
+     *                            - (int)   $totalPages  : the total pages count
+
+     *                            Example:
+     *                            $this->addPageFilter(function(array $items, int $current, int $total) {
+     *                                return array_map('trim', $items);
+     *                            });
+     *
+     * @return $this
+     */
+    public function addPageFilter(callable $processor)
+    {
+        $this->pageFilters[] = $processor;
 
         return $this;
     }

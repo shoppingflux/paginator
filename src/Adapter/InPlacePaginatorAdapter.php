@@ -11,9 +11,9 @@ class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
     private $traversable;
 
     /**
-     * @param iterable $iterator
+     * @param iterable|array|\Iterator|\IteratorAggregate $iterator
      */
-    public function __construct(iterable $iterator)
+    public function __construct($iterator)
     {
         if (is_array($iterator)) {
             $iterator = new \ArrayIterator($iterator);
