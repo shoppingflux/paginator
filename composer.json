@@ -1,5 +1,6 @@
 {
   "name": "shoppingfeed/paginator",
+  "license": "MIT",
   "require": {
     "php": ">= 5.6",
     "shoppingfeed/iterator": "^1.1",
@@ -12,11 +13,5 @@
     "psr-4": {
       "ShoppingFeed\\Paginator\\": "src/"
     }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://satis-tool.shopping-feed.com/"
-    }
-  ]
+  }
 }
