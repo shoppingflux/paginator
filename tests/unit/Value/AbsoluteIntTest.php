@@ -1,13 +1,14 @@
 <?php
 namespace ShoppingFeed\Paginator\Value;
 
+use PHPUnit\Framework\TestCase;
 use ShoppingFeed\Paginator\Exception;
 
 /**
  * @group paginator
  * @group value
  */
-class AbsoluteIntTest extends \PHPUnit_Framework_TestCase
+class AbsoluteIntTest extends TestCase
 {
     public function testAcceptToStringObjects()
     {

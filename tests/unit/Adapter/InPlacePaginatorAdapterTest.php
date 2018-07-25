@@ -1,7 +1,9 @@
 <?php
 namespace ShoppingFeed\Paginator\Adapter;
 
-class InPlacePaginatorAdapterTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class InPlacePaginatorAdapterTest extends TestCase
 {
     public function testAcceptArrayAsIterable()
     {

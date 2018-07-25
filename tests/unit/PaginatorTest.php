@@ -1,6 +1,7 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use PHPUnit\Framework\TestCase;
 use ShoppingFeed\Paginator\Adapter\AbstractPaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\InPlacePaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
@@ -9,7 +10,7 @@ use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
  * @group paginator
  * @group library
  */
-class PaginatorTest extends \PHPUnit_Framework_TestCase
+class PaginatorTest extends TestCase
 {
     /**
      * @var Paginator

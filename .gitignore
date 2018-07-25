@@ -1,6 +1,9 @@
 .idea
-/vendor
-/composer.phar
+vendor
+composer.phar
 .DS_Store
-.idea/
+.idea
+.scannerwork
 composer.lock
+build
+

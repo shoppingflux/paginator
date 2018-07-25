@@ -1,6 +1,7 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
+use PHPUnit\Framework\TestCase;
 use ShoppingFeed\Paginator\Adapter\InPlacePaginatorAdapter;
 use ShoppingFeed\Paginator\Exception\BreakIterationException;
 
@@ -8,7 +9,7 @@ use ShoppingFeed\Paginator\Exception\BreakIterationException;
  * @group paginator
  * @group library
  */
-class PaginatedIteratorTest extends \PHPUnit_Framework_TestCase
+class PaginatedIteratorTest extends TestCase
 {
     /**
      * @var PaginatedIterator
