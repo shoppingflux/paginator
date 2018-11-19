@@ -130,9 +130,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
      */
     public function toArray()
     {
-        $this->paginate();
-
-        return $this->adapter->toArray();
+        return iterator_to_array($this->getIterator());
     }
 
     /**

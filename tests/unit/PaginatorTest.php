@@ -87,8 +87,8 @@ class PaginatorTest extends TestCase
 
         $this->adapter
             ->expects($this->once())
-            ->method('toArray')
-            ->willReturn($expected = ['one', 'two'])
+            ->method('getIterator')
+            ->willReturn(new \ArrayIterator($expected = [1, 2]))
         ;
 
         $this->assertSame($expected, $this->instance->toArray());
