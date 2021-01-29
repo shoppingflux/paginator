@@ -2,7 +2,7 @@
   "name": "shoppingfeed/paginator",
   "license": "MIT",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.4",
     "shoppingfeed/iterator": "^1.1",
     "shoppingfeed/exception": "^1.0"
   },
