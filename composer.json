@@ -1,5 +1,6 @@
 {
   "name": "shoppingfeed/paginator",
+  "description": "Paginator library",
   "license": "MIT",
   "require": {
     "php": ">=7.4",
@@ -15,5 +16,10 @@
     "psr-4": {
       "ShoppingFeed\\Paginator\\": "src/"
     }
+  },
+  "scripts": {
+    "test": ["@phpunit", "@cs"],
+    "phpunit": "vendor/bin/phpunit",
+    "cs": "vendor/bin/sfcs src --progress -vvv"
   }
 }

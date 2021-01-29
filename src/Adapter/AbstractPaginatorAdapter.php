@@ -9,8 +9,11 @@ abstract class AbstractPaginatorAdapter implements
     TotalPagesAwareInterface
 {
     private ?AbsoluteInt $currentPage = null;
+
     private ?AbsoluteInt $limit = null;
+
     private ?AbsoluteInt $offset = null;
+
     private ?int $totalPages = null;
 
     public function limit($limit = null, $offset = null): void
@@ -21,6 +24,7 @@ abstract class AbstractPaginatorAdapter implements
         if (null !== $limit) {
             $this->limit = new AbsoluteInt($limit);
         }
+
         if (null !== $offset) {
             $this->offset = new AbsoluteInt($offset);
         }

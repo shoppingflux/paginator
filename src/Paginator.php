@@ -98,6 +98,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
             foreach ($this->filters as $filter) {
                 $item = $filter($item);
             }
+
             yield $item;
         }
     }

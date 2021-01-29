@@ -43,6 +43,7 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
                         $items = $filter($items, $currentPage, $totalPages);
                     }
                 }
+
                 foreach ($items as $item) {
                     yield $item;
                 }
