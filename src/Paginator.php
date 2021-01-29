@@ -4,6 +4,7 @@ namespace ShoppingFeed\Paginator;
 use ShoppingFeed\Iterator\FilterAggregateAwareTrait;
 use ShoppingFeed\Paginator\Adapter\CurrentPageAwareInterface;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
+use ShoppingFeed\Paginator\Adapter\TotalPagesAwareInterface;
 use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
 class Paginator implements PaginationProviderInterface, PaginatorInterface
@@ -145,10 +146,16 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     public function getTotalPages(): int
     {
         if (! $numberOfItems = $this->getTotalCount()) {
-            return 0;
+            $total = 0;
+        } else {
+            $total = (int) ceil($numberOfItems / $this->getItemsPerPage());
         }
 
-        return (int) ceil($numberOfItems / $this->getItemsPerPage());
+        if ($this->adapter instanceof TotalPagesAwareInterface) {
+            $this->adapter->setTotalPages($total);
+        }
+
+        return $total;
     }
 
     /**

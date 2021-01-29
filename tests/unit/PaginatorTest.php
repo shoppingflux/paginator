@@ -17,7 +17,7 @@ class PaginatorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->adapter  = $this->createMock(PaginatorAdapterInterface::class);
+        $this->adapter  = $this->createMock(AbstractPaginatorAdapter::class);
         $this->instance = new Paginator($this->adapter);
     }
 
@@ -229,6 +229,20 @@ class PaginatorTest extends TestCase
             ->willReturn(new \ArrayIterator([0, 0]));
 
         $this->assertSame([2, 2], iterator_to_array($this->instance));
+    }
+
+    public function testGetTotalPagesSetValueToAdapter(): void
+    {
+        $this->adapter
+            ->method('count')
+            ->willReturn(20);
+
+        $this->adapter
+            ->expects($this->once())
+            ->method('setTotalPages')
+            ->with(2);
+
+        $this->assertSame(2, $this->instance->getTotalPages());
     }
 }
 
