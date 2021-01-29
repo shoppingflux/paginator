@@ -6,7 +6,7 @@ use ShoppingFeed\Paginator\Exception;
 class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
 {
     /**
-     * @var \Iterator
+     * @var \Iterator|\IteratorAggregate
      */
     private $traversable;
 
@@ -26,10 +26,7 @@ class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
         $this->traversable = $iterator;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         if ($this->getLimit() === 0) {
             return new \ArrayIterator([]);
@@ -47,10 +44,7 @@ class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function count()
+    public function count(): int
     {
         return iterator_count($this->traversable);
     }

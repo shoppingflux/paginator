@@ -1,18 +1,19 @@
-<?php
+<?php /** @noinspection ALL */
+
 namespace ShoppingFeed\Paginator\Adapter;
 
 use PHPUnit\Framework\TestCase;
 
 class InPlacePaginatorAdapterTest extends TestCase
 {
-    public function testAcceptArrayAsIterable()
+    public function testAcceptArrayAsIterable(): void
     {
         $instance = new InPlacePaginatorAdapter(['foo', 'bar']);
 
         $this->assertSame(['foo', 'bar'], $instance->toArray());
     }
 
-    public function testAcceptIteratorAggregateAsIterable()
+    public function testAcceptIteratorAggregateAsIterable(): void
     {
         $instance = new InPlacePaginatorAdapter(
             new class implements \IteratorAggregate
@@ -27,14 +28,14 @@ class InPlacePaginatorAdapterTest extends TestCase
         $this->assertSame(['foo', 'bar'], $instance->toArray());
     }
 
-    public function testWithNoLimitTheIteratorCompletesItsIteration()
+    public function testWithNoLimitTheIteratorCompletesItsIteration(): void
     {
         $instance = new InPlacePaginatorAdapter(new \ArrayIterator(['foo', 'bar']));
 
         $this->assertSame(['foo', 'bar'], $instance->toArray());
     }
 
-    public function testPaginatorSkipsResultsBeforeOffset()
+    public function testPaginatorSkipsResultsBeforeOffset(): void
     {
         $instance = new InPlacePaginatorAdapter(new \ArrayIterator(['foo', 'bar', 'baz']));
 
@@ -45,7 +46,7 @@ class InPlacePaginatorAdapterTest extends TestCase
         $this->assertSame([2 => 'baz'], $instance->toArray());
     }
 
-    public function testPaginatorStopsAfterLimit()
+    public function testPaginatorStopsAfterLimit(): void
     {
         $instance = new InPlacePaginatorAdapter(new \ArrayIterator(['foo', 'bar', 'baz']));
 
@@ -56,7 +57,7 @@ class InPlacePaginatorAdapterTest extends TestCase
         $this->assertSame(['foo', 'bar'], $instance->toArray());
     }
 
-    public function testWithBothOffsetAndLimitThePaginatorProvidesGoodResults()
+    public function testWithBothOffsetAndLimitThePaginatorProvidesGoodResults(): void
     {
         $instance = new InPlacePaginatorAdapter(new \ArrayIterator(['foo', 'bar', 'baz', 'qux', 'norf']));
 
@@ -73,12 +74,19 @@ class InPlacePaginatorAdapterTest extends TestCase
         $this->assertSame([2 => 'baz', 3 => 'qux'], $instance->toArray());
     }
 
-    public function testIteratorCountTotalEntries()
+    public function testIteratorCountTotalEntries(): void
     {
         $instance = new InPlacePaginatorAdapter(new \ArrayIterator(['foo', 'bar', 'baz']));
         $this->assertSame(3, $instance->count());
 
         $instance->limit(1);
         $this->assertSame(3, $instance->count());
+    }
+
+    public function testItResolveTotalPages(): void
+    {
+        $instance = new InPlacePaginatorAdapter(new \ArrayIterator(['foo', 'bar', 'baz']));
+        $instance->setTotalPages(120);
+        $this->assertSame(120, $instance->getTotalPages());
     }
 }

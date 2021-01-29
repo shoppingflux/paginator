@@ -6,19 +6,13 @@ use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 
 class PaginatedIterator extends AbstractIterator implements PaginatorInterface
 {
-    /**
-     * @var PaginatorInterface
-     */
-    private $paginator;
+    private PaginatorInterface $paginator;
 
     /**
      * @var callable[]
      */
-    private $pageFilters = [];
+    private array $pageFilters = [];
 
-    /**
-     * @param PaginatorInterface $paginator
-     */
     public function __construct(PaginatorInterface $paginator)
     {
         $this->paginator = $paginator;
@@ -26,20 +20,13 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
 
     /**
      * Shortcut that allow to build a new instance directly from an adapter instance
-     *
-     * @param PaginatorAdapterInterface $adapter
-     *
-     * @return PaginatedIterator
      */
-    public static function withAdapter(PaginatorAdapterInterface $adapter)
+    public static function withAdapter(PaginatorAdapterInterface $adapter): self
     {
         return new self(new Paginator($adapter));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         $currentPage = $this->getCurrentPage();
         $totalPages  = $this->getTotalPages();
@@ -56,6 +43,7 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
                         $items = $filter($items, $currentPage, $totalPages);
                     }
                 }
+
                 foreach ($items as $item) {
                     yield $item;
                 }
@@ -72,86 +60,56 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setCurrentPage($number)
+    public function setCurrentPage($number): self
     {
         $this->paginator->setCurrentPage($number);
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setItemsPerPage($number)
+    public function setItemsPerPage($number): self
     {
         $this->paginator->setItemsPerPage($number);
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->paginator->getTotalCount();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         return $this->paginator->getCurrentPage();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getItemsPerPage()
+    public function getItemsPerPage(): int
     {
         return $this->paginator->getItemsPerPage();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNextPage()
+    public function getNextPage(): ?int
     {
         return $this->paginator->getNextPage();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPrevPage()
+    public function getPrevPage(): ?int
     {
         return $this->paginator->getPrevPage();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getTotalPages()
+    public function getTotalPages(): int
     {
         return $this->paginator->getTotalPages();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function count()
+    public function count(): int
     {
         return $this->paginator->count();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function addFilter(callable $processor)
+    public function addFilter(callable $processor): self
     {
         $this->paginator->addFilter($processor);
 
@@ -177,7 +135,7 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
      *
      * @return $this
      */
-    public function addPageFilter(callable $processor)
+    public function addPageFilter(callable $processor): self
     {
         $this->pageFilters[] = $processor;
 

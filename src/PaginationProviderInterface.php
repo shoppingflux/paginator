@@ -3,13 +3,7 @@ namespace ShoppingFeed\Paginator;
 
 interface PaginationProviderInterface
 {
-    /**
-     * @return int
-     */
-    public function getItemsPerPage();
+    public function getItemsPerPage(): int;
 
-    /**
-     * @return int
-     */
-    public function getCurrentPage();
+    public function getCurrentPage(): int;
 }

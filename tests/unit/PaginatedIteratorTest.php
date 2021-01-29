@@ -11,23 +11,17 @@ use ShoppingFeed\Paginator\Exception\BreakIterationException;
  */
 class PaginatedIteratorTest extends TestCase
 {
-    /**
-     * @var PaginatedIterator
-     */
-    private $instance;
+    private PaginatedIterator $instance;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $adapter;
+    private PaginatorInterface $adapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter  = $this->createMock(PaginatorInterface::class);
         $this->instance = new PaginatedIterator($this->adapter);
     }
 
-    public function testCurrentAccessorForwardToAdapter()
+    public function testCurrentAccessorForwardToAdapter(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -39,12 +33,12 @@ class PaginatedIteratorTest extends TestCase
         $this->adapter
             ->expects($this->once())
             ->method('setCurrentPage')
-            ->willReturn(2);
+            ->with(2);
 
         $this->assertSame($this->instance, $this->instance->setCurrentPage(2));
     }
 
-    public function testItemsPerPageAccessorForwardToAdapter()
+    public function testItemsPerPageAccessorForwardToAdapter(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -56,12 +50,12 @@ class PaginatedIteratorTest extends TestCase
         $this->adapter
             ->expects($this->once())
             ->method('setItemsPerPage')
-            ->willReturn(5);
+            ->with(5);
 
         $this->assertSame($this->instance, $this->instance->setItemsPerPage(5));
     }
 
-    public function testCountTotalItemsForwardToAdapter()
+    public function testCountTotalItemsForwardToAdapter(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -71,7 +65,7 @@ class PaginatedIteratorTest extends TestCase
         $this->assertSame(33, $this->instance->getTotalCount());
     }
 
-    public function testCountForwardToAdapter()
+    public function testCountForwardToAdapter(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -81,7 +75,7 @@ class PaginatedIteratorTest extends TestCase
         $this->assertSame(33, $this->instance->count());
     }
 
-    public function testGetNextPageForwardToAdapter()
+    public function testGetNextPageForwardToAdapter(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -91,7 +85,7 @@ class PaginatedIteratorTest extends TestCase
         $this->assertSame(33, $this->instance->getNextPage());
     }
 
-    public function testGetPrevPageForwardToAdapter()
+    public function testGetPrevPageForwardToAdapter(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -104,7 +98,7 @@ class PaginatedIteratorTest extends TestCase
     /**
      * @dataProvider iteratesOverPaginatorDataProvider
      */
-    public function testIteratesOverPaginatedAdapter($currentPage, $total, $expected)
+    public function testIteratesOverPaginatedAdapter($currentPage, $total, $expected): void
     {
         $this->adapter
             ->expects($this->once())
@@ -132,7 +126,7 @@ class PaginatedIteratorTest extends TestCase
         $this->instance->toArray();
     }
 
-    public function iteratesOverPaginatorDataProvider()
+    public function iteratesOverPaginatorDataProvider(): array
     {
         return [
             [1, 10, 9],
@@ -144,7 +138,7 @@ class PaginatedIteratorTest extends TestCase
         ];
     }
 
-    public function testAddFilterForwardToInnerPaginator()
+    public function testAddFilterForwardToInnerPaginator(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -154,7 +148,7 @@ class PaginatedIteratorTest extends TestCase
         $this->assertSame($this->instance, $this->instance->addFilter('is_array'));
     }
 
-    public function testIterationCanBeBrokenWithAppropriateException()
+    public function testIterationCanBeBrokenWithAppropriateException(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -174,7 +168,7 @@ class PaginatedIteratorTest extends TestCase
         $this->instance->toArray();
     }
 
-    public function testCanBeBuiltFromAdapter()
+    public function testCanBeBuiltFromAdapter(): void
     {
         $expected = range(1, 10);
         $instance = PaginatedIterator::withAdapter(new InPlacePaginatorAdapter($expected));
@@ -185,7 +179,7 @@ class PaginatedIteratorTest extends TestCase
     /**
      * @dataProvider pageFilterDataProvider
      */
-    public function testFiltersCanBeAppliedAtBatchLevel($perPage, $expected)
+    public function testFiltersCanBeAppliedAtBatchLevel($perPage, $expected): void
     {
         // Starts with 10 items with value = 0
         $items    = array_fill(0, 3, 0);
@@ -202,7 +196,7 @@ class PaginatedIteratorTest extends TestCase
         $this->assertSame($expected, $instance->toArray());
     }
 
-    public function pageFilterDataProvider()
+    public function pageFilterDataProvider(): array
     {
         return [
             [3, [2, 2, 2]],
