@@ -3,30 +3,17 @@ namespace ShoppingFeed\Paginator\Adapter;
 
 use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
-abstract class AbstractPaginatorAdapter implements PaginatorAdapterInterface, CurrentPageAwareInterface
+abstract class AbstractPaginatorAdapter implements
+    PaginatorAdapterInterface,
+    CurrentPageAwareInterface,
+    TotalPagesAwareInterface
 {
-    /**
-     * @var AbsoluteInt
-     */
-    private $currentPage;
+    private ?AbsoluteInt $currentPage = null;
+    private ?AbsoluteInt $limit = null;
+    private ?AbsoluteInt $offset = null;
+    private ?int $totalPages = null;
 
-    /**
-     * @var AbsoluteInt
-     */
-    private $limit;
-
-    /**
-     * @var AbsoluteInt
-     */
-    private $offset;
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     *
-     * @return $this
-     */
-    public function limit($limit = null, $offset = null)
+    public function limit($limit = null, $offset = null): void
     {
         $this->limit  = null;
         $this->offset = null;
@@ -37,50 +24,47 @@ abstract class AbstractPaginatorAdapter implements PaginatorAdapterInterface, Cu
         if (null !== $offset) {
             $this->offset = new AbsoluteInt($offset);
         }
-
-        return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setCurrentPage(AbsoluteInt $page)
+    public function setTotalPages(int $total): void
+    {
+        $this->totalPages = $total;
+    }
+
+    public function getTotalPages(): int
+    {
+        return $this->totalPages;
+    }
+
+    public function setCurrentPage(AbsoluteInt $page): void
     {
         $this->currentPage = $page;
     }
 
-    /**
-     * @return int
-     */
-    protected function getCurrentPage()
+    protected function getCurrentPage(): int
     {
         return $this->currentPage->toInt();
     }
 
-    /**
-     * @return int
-     */
-    protected function getLimit()
+    protected function getLimit(): ?int
     {
         if ($this->limit) {
             return $this->limit->toInt();
         }
+
+        return null;
     }
 
-    /**
-     * @return int
-     */
-    protected function getOffset()
+    protected function getOffset(): ?int
     {
         if ($this->offset) {
             return $this->offset->toInt();
         }
+
+        return null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return iterator_to_array($this);
     }

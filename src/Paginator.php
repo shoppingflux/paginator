@@ -10,27 +10,16 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
 {
     use FilterAggregateAwareTrait;
 
-    /**
-     * @var PaginatorAdapterInterface
-     */
-    private $adapter;
+    private PaginatorAdapterInterface $adapter;
 
-    /**
-     * @var AbsoluteInt
-     */
-    private $currentPage;
+    private AbsoluteInt $currentPage;
 
-    /**
-     * @var AbsoluteInt
-     */
-    private $itemsPerPage;
+    private AbsoluteInt $itemsPerPage;
 
     /**
      * Cache the adapter count() call by default
-     *
-     * @var int
      */
-    private $totalCount;
+    private ?int $totalCount = null;
 
     /**
      * @param PaginatorAdapterInterface $adapter        Paginator adapter
@@ -49,7 +38,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
      *
      * @return $this
      */
-    public function setItemsPerPage($number)
+    public function setItemsPerPage($number): self
     {
         if (! $number instanceof AbsoluteInt) {
             $number = new AbsoluteInt(max(1, $number));
@@ -61,11 +50,22 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     }
 
     /**
+     * Init pagination with provider
+     */
+    public function initWith(PaginationProviderInterface $provider): self
+    {
+        $this->setItemsPerPage($provider->getItemsPerPage());
+        $this->setCurrentPage($provider->getCurrentPage());
+
+        return $this;
+    }
+
+    /**
      * @param int|AbsoluteInt $number
      *
      * @return $this
      */
-    public function setCurrentPage($number)
+    public function setCurrentPage($number): self
     {
         if (! $number instanceof AbsoluteInt) {
             $number = new AbsoluteInt(max(1, $number));
@@ -80,41 +80,17 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         return $this;
     }
 
-    /**
-     * Init pagination with provider
-     *
-     * @param PaginationProviderInterface $provider
-     *
-     * @return $this
-     */
-    public function initWith(PaginationProviderInterface $provider)
-    {
-        $this->setItemsPerPage($provider->getItemsPerPage());
-        $this->setCurrentPage($provider->getCurrentPage());
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         return $this->currentPage->toInt();
     }
 
-    /**
-     * @return int
-     */
-    public function getItemsPerPage()
+    public function getItemsPerPage(): int
     {
         return $this->itemsPerPage->toInt();
     }
 
-    /**
-     * @return \Traversable
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         $this->paginate();
         foreach ($this->adapter as $item) {
@@ -125,18 +101,12 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         }
     }
 
-    /**
-     * @return array
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return iterator_to_array($this->getIterator());
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         $this->paginate();
 
@@ -147,40 +117,32 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         return $this->totalCount;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function count()
+    public function count(): int
     {
         return $this->getTotalCount();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNextPage()
+    public function getNextPage(): ?int
     {
         $current = $this->getCurrentPage();
         if ($current < $this->getTotalPages()) {
             return $current + 1;
         }
+
+        return null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPrevPage()
+    public function getPrevPage(): ?int
     {
         $prev = $this->getCurrentPage() - 1;
         if ($prev > 0) {
             return $prev;
         }
+
+        return null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getTotalPages()
+    public function getTotalPages(): int
     {
         if (! $numberOfItems = $this->getTotalCount()) {
             return 0;
@@ -192,7 +154,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     /**
      * Initialize adapter pagination
      */
-    private function paginate()
+    private function paginate(): void
     {
         $perPage = $this->itemsPerPage->toInt();
         $offset  = max(0, ($this->currentPage->toInt() - 1)) * $perPage;

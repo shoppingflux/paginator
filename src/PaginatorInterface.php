@@ -4,7 +4,11 @@ namespace ShoppingFeed\Paginator;
 use ShoppingFeed\Iterator\FilterAggregateIteratorInterface;
 use ShoppingFeed\Iterator\IteratorInterface;
 
-interface PaginatorInterface extends IteratorInterface, FilterAggregateIteratorInterface, \Countable
+interface PaginatorInterface extends
+    PaginationProviderInterface,
+    IteratorInterface,
+    FilterAggregateIteratorInterface,
+    \Countable
 {
     /**
      * Define the current page
@@ -13,7 +17,7 @@ interface PaginatorInterface extends IteratorInterface, FilterAggregateIteratorI
      *
      * @return $this
      */
-    public function setCurrentPage($number);
+    public function setCurrentPage($number): self;
 
     /**
      * Define the number of items per page
@@ -22,41 +26,25 @@ interface PaginatorInterface extends IteratorInterface, FilterAggregateIteratorI
      *
      * @return $this
      */
-    public function setItemsPerPage($number);
+    public function setItemsPerPage($number): self;
 
     /**
      * Return the total count of items without applying pagination
-     *
-     * @return integer
      */
-    public function getTotalCount();
-
-    /**
-     * Return the current page number
-     *
-     * @return integer
-     */
-    public function getCurrentPage();
-
-    /**
-     * Return the number of items per page
-     *
-     * @return integer
-     */
-    public function getItemsPerPage();
+    public function getTotalCount(): int;
 
     /**
      * @return integer|null Null if the current page is the last one
      */
-    public function getNextPage();
+    public function getNextPage(): ?int;
 
     /**
      * @return integer|null Null if the current page is the first one
      */
-    public function getPrevPage();
+    public function getPrevPage(): ?int;
 
     /**
      * @return int The number of pages
      */
-    public function getTotalPages();
+    public function getTotalPages(): int;
 }

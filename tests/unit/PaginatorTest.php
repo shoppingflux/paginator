@@ -6,43 +6,36 @@ use ShoppingFeed\Paginator\Adapter\AbstractPaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\InPlacePaginatorAdapter;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 
-/**
- * @group paginator
- * @group library
- */
 class PaginatorTest extends TestCase
 {
     /**
      * @var Paginator
      */
-    private $instance;
+    private Paginator $instance;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $adapter;
+    private PaginatorAdapterInterface $adapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter  = $this->createMock(PaginatorAdapterInterface::class);
         $this->instance = new Paginator($this->adapter);
     }
 
-    public function testCurrentPageAccessor()
+    public function testCurrentPageAccessor(): void
     {
         $this->assertSame(1, $this->instance->getCurrentPage());
         $this->assertSame($this->instance, $this->instance->setCurrentPage(2));
         $this->assertSame(2, $this->instance->getCurrentPage());
     }
 
-    public function testItemsPerPageAccessor()
+    public function testItemsPerPageAccessor(): void
     {
         $this->assertSame(10, $this->instance->getItemsPerPage());
         $this->assertSame($this->instance, $this->instance->setItemsPerPage(20));
         $this->assertSame(20, $this->instance->getItemsPerPage());
     }
 
-    public function testInitWithPaginationProvider()
+    public function testInitWithPaginationProvider(): void
     {
         $provider = $this->createMock(PaginationProviderInterface::class);
         $provider
@@ -60,7 +53,7 @@ class PaginatorTest extends TestCase
         $this->assertSame(3, $this->instance->getCurrentPage());
     }
 
-    public function testCountForwardCallToAdapter()
+    public function testCountForwardCallToAdapter(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -77,7 +70,7 @@ class PaginatorTest extends TestCase
         $this->assertSame(100, $this->instance->getTotalCount());
     }
 
-    public function testGetItemsAsArray()
+    public function testGetItemsAsArray(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -94,7 +87,7 @@ class PaginatorTest extends TestCase
         $this->assertSame($expected, $this->instance->toArray());
     }
 
-    public function testGetIterator()
+    public function testGetIterator(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -111,7 +104,7 @@ class PaginatorTest extends TestCase
         $this->assertSame($expected, iterator_to_array($this->instance));
     }
 
-    public function testCountReturnTheTotalNumberOfPages()
+    public function testCountReturnTheTotalNumberOfPages(): void
     {
         $this->adapter
             ->expects($this->once())
@@ -131,7 +124,7 @@ class PaginatorTest extends TestCase
     /**
      * @dataProvider nextPageDataProvider
      */
-    public function testGetNextPage($currentPage, $expectedPage)
+    public function testGetNextPage($currentPage, $expectedPage): void
     {
         $adapter  = new InPlacePaginatorAdapter(new \ArrayIterator(array_fill(0, 100, true)));
         $instance = new Paginator($adapter);
@@ -141,7 +134,7 @@ class PaginatorTest extends TestCase
         $this->assertSame($expectedPage, $instance->getNextPage());
     }
 
-    public function nextPageDataProvider()
+    public function nextPageDataProvider(): array
     {
         return [
             [5, null],
@@ -155,7 +148,7 @@ class PaginatorTest extends TestCase
     /**
      * @dataProvider prevPageDataProvider
      */
-    public function testGetPrevPage($currentPage, $expectedPage)
+    public function testGetPrevPage($currentPage, $expectedPage): void
     {
         $adapter  = new InPlacePaginatorAdapter(new \ArrayIterator(array_fill(0, 100, true)));
         $instance = new Paginator($adapter);
@@ -165,7 +158,7 @@ class PaginatorTest extends TestCase
         $this->assertSame($expectedPage, $instance->getPrevPage());
     }
 
-    public function prevPageDataProvider()
+    public function prevPageDataProvider(): array
     {
         return [
             [5, 4],
@@ -177,7 +170,7 @@ class PaginatorTest extends TestCase
         ];
     }
 
-    public function testSetCurrentPageWithCurrentPageAwareAdapter()
+    public function testSetCurrentPageWithCurrentPageAwareAdapter(): void
     {
         $mock = $this->createMock(AbstractPaginatorAdapter::class);
         $mock
@@ -191,7 +184,7 @@ class PaginatorTest extends TestCase
     /**
      * @dataProvider providesElementsForTotalCount
      */
-    public function testGetTotalCountOfPages($perPage, $itemCount, $totalPages)
+    public function testGetTotalCountOfPages($perPage, $itemCount, $totalPages): void
     {
         $mock = $this->createMock(PaginatorAdapterInterface::class);
         $mock
@@ -203,7 +196,7 @@ class PaginatorTest extends TestCase
         $this->assertSame($totalPages, $paginator->getTotalPages());
     }
 
-    public function providesElementsForTotalCount()
+    public function providesElementsForTotalCount(): array
     {
         return [
             [10, 0, 0],
@@ -214,7 +207,7 @@ class PaginatorTest extends TestCase
         ];
     }
 
-    public function testAddFilterIsFluent()
+    public function testAddFilterIsFluent(): void
     {
         $this->assertSame(
             $this->instance,
@@ -222,7 +215,7 @@ class PaginatorTest extends TestCase
         );
     }
 
-    public function testFiltersAreAppliedOnIterations()
+    public function testFiltersAreAppliedOnIterations(): void
     {
         $this->instance->addFilter(function($item) {
             return $item + 1;
