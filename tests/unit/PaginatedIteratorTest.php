@@ -5,10 +5,6 @@ use PHPUnit\Framework\TestCase;
 use ShoppingFeed\Paginator\Adapter\InPlacePaginatorAdapter;
 use ShoppingFeed\Paginator\Exception\BreakIterationException;
 
-/**
- * @group paginator
- * @group library
- */
 class PaginatedIteratorTest extends TestCase
 {
     private PaginatedIterator $instance;
