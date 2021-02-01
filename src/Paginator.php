@@ -7,20 +7,9 @@ use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 use ShoppingFeed\Paginator\Adapter\TotalPagesAwareInterface;
 use ShoppingFeed\Paginator\Value\AbsoluteInt;
 
-class Paginator implements PaginationProviderInterface, PaginatorInterface
+class Paginator extends AbstractPaginator implements PaginationProviderInterface, PaginatorInterface
 {
-    use FilterAggregateAwareTrait;
-
-    private PaginatorAdapterInterface $adapter;
-
     private AbsoluteInt $currentPage;
-
-    private AbsoluteInt $itemsPerPage;
-
-    /**
-     * Cache the adapter count() call by default
-     */
-    private ?int $totalCount = null;
 
     /**
      * @param PaginatorAdapterInterface $adapter        Paginator adapter
@@ -42,10 +31,10 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
     public function setItemsPerPage($number): self
     {
         if (! $number instanceof AbsoluteInt) {
-            $number = new AbsoluteInt(max(1, $number));
+            $number = new AbsoluteInt(max(0, $number));
         }
 
-        $this->itemsPerPage = $number;
+        $this->limit = $number->toInt();
 
         return $this;
     }
@@ -88,40 +77,12 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
 
     public function getItemsPerPage(): int
     {
-        return $this->itemsPerPage->toInt();
-    }
-
-    public function getIterator(): \Iterator
-    {
-        $this->paginate();
-        foreach ($this->adapter as $item) {
-            foreach ($this->filters as $filter) {
-                $item = $filter($item);
-            }
-
-            yield $item;
-        }
+        return $this->limit;
     }
 
     public function toArray(): array
     {
         return iterator_to_array($this->getIterator());
-    }
-
-    public function getTotalCount(): int
-    {
-        $this->paginate();
-
-        if (null === $this->totalCount) {
-            $this->totalCount = $this->adapter->count();
-        }
-
-        return $this->totalCount;
-    }
-
-    public function count(): int
-    {
-        return $this->getTotalCount();
     }
 
     public function getNextPage(): ?int
@@ -149,7 +110,7 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         if (! $numberOfItems = $this->getTotalCount()) {
             $total = 0;
         } else {
-            $total = (int) ceil($numberOfItems / $this->getItemsPerPage());
+            $total = (int) ceil($numberOfItems / ($this->getItemsPerPage() ?: 1));
         }
 
         if ($this->adapter instanceof TotalPagesAwareInterface) {
@@ -159,12 +120,21 @@ class Paginator implements PaginationProviderInterface, PaginatorInterface
         return $total;
     }
 
+    public function toOffsetPaginator(): OffsetPaginator
+    {
+        $paginator = new OffsetPaginator($this->adapter);
+        $paginator->setLimit($this->getItemsPerPage());
+        $paginator->setOffset($this->getItemsPerPage() * $this->getCurrentPage());
+
+        return $paginator;
+    }
+
     /**
      * Initialize adapter pagination
      */
-    private function paginate(): void
+    protected function paginate(): void
     {
-        $perPage = $this->itemsPerPage->toInt();
+        $perPage = $this->limit;
         $offset  = max(0, ($this->currentPage->toInt() - 1)) * $perPage;
 
         $this->adapter->limit($perPage, $offset);

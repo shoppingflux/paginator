@@ -244,5 +244,25 @@ class PaginatorTest extends TestCase
 
         $this->assertSame(2, $this->instance->getTotalPages());
     }
+
+    public function testConvertToOffsetPaginator(): void
+    {
+        $this->instance->setCurrentPage(5);
+        $this->instance->setItemsPerPage(10);
+
+        $paginator = $this->instance->toOffsetPaginator();
+        $this->assertInstanceOf(OffsetPaginator::class, $paginator);
+        $this->assertSame(50, $paginator->getOffset());
+        $this->assertSame(10, $paginator->getLimit());
+    }
+
+    public function testItDoesNotQueryAdapterIfNoLimit(): void
+    {
+        $this->instance->setItemsPerPage(0);
+        $this->adapter->expects($this->never())->method('getIterator');
+
+        $result = iterator_to_array($this->instance->getIterator());
+        $this->assertEmpty($result, 'There is no results when limit is set to 0');
+    }
 }
 

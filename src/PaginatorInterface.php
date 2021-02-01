@@ -3,6 +3,7 @@ namespace ShoppingFeed\Paginator;
 
 use ShoppingFeed\Iterator\FilterAggregateIteratorInterface;
 use ShoppingFeed\Iterator\IteratorInterface;
+use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 
 interface PaginatorInterface extends
     PaginationProviderInterface,
