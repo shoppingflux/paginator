@@ -1,7 +1,6 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
-use ShoppingFeed\Iterator\FilterAggregateAwareTrait;
 use ShoppingFeed\Paginator\Adapter\CurrentPageAwareInterface;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 use ShoppingFeed\Paginator\Adapter\TotalPagesAwareInterface;
