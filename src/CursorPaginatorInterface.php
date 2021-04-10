@@ -33,8 +33,10 @@ interface CursorPaginatorInterface extends \IteratorAggregate
      * - limit (int, required)     : Max elements to fetch for that cursor
      * - after (string, optional)  : Cursor from where to fetch elements
      * - before (string, optional) : Cursor until where to fetch elements. Ignored if after is present.
+     *
+     * @return self a new cursor instance with re-configured parts.
      */
-    public function configure(array $cursor): void;
+    public function configure(array $cursor): self;
 
     /**
      * Inform about the number of items that the current page handle
