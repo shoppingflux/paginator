@@ -28,6 +28,17 @@ class CursorSerializable implements CursorInterface
      */
     private ?string $value = null;
 
+    public function toString(): string
+    {
+        return base64_encode(
+            json_encode([
+                self::PROP_VALUE     => $this->getValue(),
+                self::PROP_DIRECTION => $this->getDirection(),
+                self::PROP_LIMIT     => $this->getLimit(),
+            ], JSON_THROW_ON_ERROR)
+        );
+    }
+
     /**
      * Current implementation expects an json string encoded in base64 format.
      * Expected data structure is an array composed of:
@@ -64,15 +75,12 @@ class CursorSerializable implements CursorInterface
         return $copy;
     }
 
-    public function toString(): string
+    public function withLimit(int $limit): self
     {
-        return base64_encode(
-            json_encode([
-                self::PROP_VALUE     => $this->getValue(),
-                self::PROP_DIRECTION => $this->getDirection(),
-                self::PROP_LIMIT     => $this->getLimit(),
-            ], JSON_THROW_ON_ERROR)
-        );
+        $copy = clone $this;
+        $copy->setLimit($limit);
+
+        return $copy;
     }
 
     public function getDirection(): string
