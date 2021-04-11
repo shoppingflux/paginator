@@ -1,17 +1,15 @@
 <?php
 namespace ShoppingFeed\Paginator;
 
-use ShoppingFeed\Exception\InvalidArgumentException;
-
 class CursorSerializable implements CursorInterface
 {
     protected const PROP_DIRECTION = 'page';
-    protected const PROP_VALUE = 'value';
-    protected const PROP_LIMIT = 'limit';
-    protected const LIMIT_DEFAULT = 10;
-    protected const PAGE_NEXT = 'next';
-    protected const PAGE_PREV = 'prev';
-    protected CONST DIRECTIONS = [self::PAGE_PREV, self::PAGE_NEXT];
+    protected const PROP_VALUE     = 'value';
+    protected const PROP_LIMIT     = 'limit';
+    protected const LIMIT_DEFAULT  = 10;
+    protected const PAGE_NEXT      = 'next';
+    protected const PAGE_PREV      = 'prev';
+    protected CONST DIRECTIONS     = [self::PAGE_PREV, self::PAGE_NEXT];
 
     /**
      * Sorting direction of the cursor, can be either "before" or "after"
@@ -51,7 +49,7 @@ class CursorSerializable implements CursorInterface
     public function withString(string $serialized): self
     {
         if (! $decoded = base64_decode($serialized)) {
-            throw new InvalidArgumentException(sprintf(
+            throw new Exception\InvalidArgumentException(sprintf(
                 '%s : value is not a valid base64 string.',
                 $serialized
             ));
@@ -60,7 +58,7 @@ class CursorSerializable implements CursorInterface
         try {
             $data = json_decode($decoded, true, 512, JSON_THROW_ON_ERROR);
         } catch (\Throwable $exception) {
-            throw new InvalidArgumentException(sprintf(
+            throw new Exception\InvalidArgumentException(sprintf(
                 'Json decoding failed for "%s" : %s',
                 $serialized,
                 $exception->getMessage()
@@ -106,7 +104,7 @@ class CursorSerializable implements CursorInterface
     final protected function setDirection(string $direction): void
     {
         if (! in_array($direction, self::DIRECTIONS, true)) {
-            throw new InvalidArgumentException(
+            throw new Exception\InvalidArgumentException(
                 'Invalid direction given, it must be one of the following: ' . implode(', ', self::DIRECTIONS)
             );
         }
@@ -117,7 +115,7 @@ class CursorSerializable implements CursorInterface
     final protected function setLimit(int $limit): void
     {
         if ($limit < 0) {
-            throw new InvalidArgumentException(
+            throw new Exception\InvalidArgumentException(
                 'Invalid limit given, it must be an integer greater than or equal to 0'
             );
         }
