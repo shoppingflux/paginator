@@ -9,14 +9,21 @@ interface CursorPaginatorInterface extends \IteratorAggregate
     public function getIterator(): \Iterator;
 
     /**
-     * Fetch the first cursor of the pagination set
+     * Get the collection of elements + their cursor limited by the pagination
+     *
+     * @return \Iterator|CursorEdge[]
      */
-    public function getFirstCursor(): ?string;
+    public function getEdgeIterator(): \Iterator;
 
     /**
      * Fetch the first cursor of the pagination set
      */
-    public function getLastCursor(): ?string;
+    public function getFirstCursor(): ?CursorInterface;
+
+    /**
+     * Fetch the first cursor of the pagination set
+     */
+    public function getLastCursor(): ?CursorInterface;
 
     /**
      * Determine if there is a page to reach after
@@ -29,14 +36,11 @@ interface CursorPaginatorInterface extends \IteratorAggregate
     public function getNextPage(): ?self;
 
     /**
-     * (Re) configure the paginator with the following information:
-     * - limit (int, required)     : Max elements to fetch for that cursor
-     * - after (string, optional)  : Cursor from where to fetch elements
-     * - before (string, optional) : Cursor until where to fetch elements. Ignored if after is present.
+     * (Re) configure the paginator with the cursor specifications.
      *
      * @return self a new cursor instance with re-configured parts.
      */
-    public function configure(array $cursor): self;
+    public function withCursor(CursorInterface $cursor): self;
 
     /**
      * Inform about the number of items that the current page handle
