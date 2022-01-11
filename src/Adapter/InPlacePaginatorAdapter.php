@@ -37,10 +37,12 @@ class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
             $iterator = $iterator->getIterator();
         }
 
+        $limit = (int) $this->getLimit();
+
         return new \LimitIterator(
             $iterator,
             $this->getOffset(),
-            $this->getLimit() ?: -1
+            $limit ?: -1
         );
     }
 
