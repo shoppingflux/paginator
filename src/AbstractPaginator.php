@@ -1,9 +1,13 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
 
+use ArrayIterator;
+use Countable;
+use Iterator;
 use ShoppingFeed\Iterator\FilterAggregateAwareTrait;
 
-abstract class AbstractPaginator implements \Countable
+abstract class AbstractPaginator implements Countable
 {
     use FilterAggregateAwareTrait;
 
@@ -19,13 +23,13 @@ abstract class AbstractPaginator implements \Countable
      */
     protected ?int $totalCount = null;
 
-    public function getIterator(): \Iterator
+    public function getIterator(): Iterator
     {
         $this->paginate();
 
         // Do not perform backend query when no items requested
         if (! $this->limit) {
-            return new \ArrayIterator([]);
+            return new ArrayIterator([]);
         }
 
         foreach ($this->adapter as $key => $item) {

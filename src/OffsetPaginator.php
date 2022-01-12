@@ -1,10 +1,13 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
+
+use IteratorAggregate;
 
 /**
  * Offset based instead of page based paginator.
  */
-class OffsetPaginator extends AbstractPaginator implements \IteratorAggregate
+class OffsetPaginator extends AbstractPaginator implements IteratorAggregate
 {
     private ?int $offset = null;
 

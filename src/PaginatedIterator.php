@@ -1,6 +1,8 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
 
+use Iterator;
 use ShoppingFeed\Iterator\AbstractIterator;
 use ShoppingFeed\Paginator\Adapter\PaginatorAdapterInterface;
 
@@ -26,7 +28,7 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
         return new self(new Paginator($adapter));
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): Iterator
     {
         $currentPage = $this->getCurrentPage();
         $totalPages  = $this->getTotalPages();

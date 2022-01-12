@@ -1,4 +1,5 @@
 <?php
+
 namespace ShoppingFeed\Paginator\Adapter;
 
 use ShoppingFeed\Paginator\Value\AbsoluteInt;
