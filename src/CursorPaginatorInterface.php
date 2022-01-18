@@ -1,19 +1,23 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
 
-interface CursorPaginatorInterface extends \IteratorAggregate
+use Iterator;
+use IteratorAggregate;
+
+interface CursorPaginatorInterface extends IteratorAggregate
 {
     /**
      * Get the collection of elements limited by the pagination
      */
-    public function getIterator(): \Iterator;
+    public function getIterator(): Iterator;
 
     /**
      * Get the collection of elements + their cursor limited by the pagination
      *
      * @return \Iterator|CursorEdge[]
      */
-    public function getEdgeIterator(): \Iterator;
+    public function getEdgeIterator(): Iterator;
 
     /**
      * Fetch the first cursor of the pagination set

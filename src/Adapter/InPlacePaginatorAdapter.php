@@ -1,6 +1,11 @@
 <?php
+
 namespace ShoppingFeed\Paginator\Adapter;
 
+use ArrayIterator;
+use Iterator;
+use IteratorAggregate;
+use LimitIterator;
 use ShoppingFeed\Paginator\Exception;
 
 class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
@@ -16,28 +21,28 @@ class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
     public function __construct($iterator)
     {
         if (is_array($iterator)) {
-            $iterator = new \ArrayIterator($iterator);
+            $iterator = new ArrayIterator($iterator);
         }
 
-        if (! $iterator instanceof \Iterator && ! $iterator instanceof \IteratorAggregate) {
-            throw Exception\InvalidArgumentException::with(\Iterator::class, $iterator);
+        if (! $iterator instanceof Iterator && ! $iterator instanceof IteratorAggregate) {
+            throw Exception\InvalidArgumentException::with(Iterator::class, $iterator);
         }
 
         $this->traversable = $iterator;
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): Iterator
     {
         if ($this->getLimit() === 0) {
-            return new \ArrayIterator([]);
+            return new ArrayIterator([]);
         }
 
         $iterator = $this->traversable;
-        if ($iterator instanceof \IteratorAggregate) {
+        if ($iterator instanceof IteratorAggregate) {
             $iterator = $iterator->getIterator();
         }
 
-        return new \LimitIterator(
+        return new LimitIterator(
             $iterator,
             $this->getOffset(),
             $this->getLimit() ?: -1

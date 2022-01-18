@@ -1,5 +1,8 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
+
+use Throwable;
 
 class CursorSerializable implements CursorInterface
 {
@@ -9,7 +12,7 @@ class CursorSerializable implements CursorInterface
     protected const LIMIT_DEFAULT  = 10;
     protected const PAGE_NEXT      = 'next';
     protected const PAGE_PREV      = 'prev';
-    protected CONST DIRECTIONS     = [self::PAGE_PREV, self::PAGE_NEXT];
+    protected const DIRECTIONS     = [self::PAGE_PREV, self::PAGE_NEXT];
 
     /**
      * Sorting direction of the cursor, can be either "before" or "after"
@@ -57,7 +60,7 @@ class CursorSerializable implements CursorInterface
 
         try {
             $data = json_decode($decoded, true, 512, JSON_THROW_ON_ERROR);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Json decoding failed for "%s" : %s',
                 $serialized,

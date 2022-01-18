@@ -1,6 +1,8 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
 
+use Countable;
 use ShoppingFeed\Iterator\FilterAggregateIteratorInterface;
 use ShoppingFeed\Iterator\IteratorInterface;
 
@@ -8,7 +10,7 @@ interface PaginatorInterface extends
     PaginationProviderInterface,
     IteratorInterface,
     FilterAggregateIteratorInterface,
-    \Countable
+    Countable
 {
     /**
      * Define the current page
