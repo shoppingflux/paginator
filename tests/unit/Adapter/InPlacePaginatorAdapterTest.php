@@ -18,7 +18,7 @@ class InPlacePaginatorAdapterTest extends TestCase
         $instance = new InPlacePaginatorAdapter(
             new class implements \IteratorAggregate
             {
-                public function getIterator()
+                public function getIterator(): \Traversable
                 {
                     return new \ArrayIterator(['foo', 'bar']);
                 }

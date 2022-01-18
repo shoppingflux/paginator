@@ -6,7 +6,7 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite>
+    <testsuite name="lib">
       <directory>./tests/unit</directory>
     </testsuite>
   </testsuites>
