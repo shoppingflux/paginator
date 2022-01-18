@@ -1,4 +1,5 @@
 <?php
+
 namespace ShoppingFeed\Paginator\Value;
 
 use ShoppingFeed\Paginator\Exception;
@@ -10,9 +11,6 @@ class AbsoluteInt
      */
     private $value;
 
-    /**
-     * @param $value
-     */
     public function __construct($value)
     {
         if (is_object($value) && is_callable([$value, '__toString'])) {

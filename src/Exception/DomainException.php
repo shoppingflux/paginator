@@ -1,6 +1,9 @@
 <?php
+
 namespace ShoppingFeed\Paginator\Exception;
 
-class DomainException extends \DomainException
+use DomainException as PHPDomainException;
+
+class DomainException extends PHPDomainException
 {
 }

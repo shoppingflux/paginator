@@ -1,9 +1,11 @@
 <?php
+
 namespace ShoppingFeed\Paginator\Adapter;
 
+use Countable;
 use ShoppingFeed\Iterator\IteratorInterface;
 
-interface PaginatorAdapterInterface extends IteratorInterface, \Countable
+interface PaginatorAdapterInterface extends IteratorInterface, Countable
 {
     public function limit($limit = null, $offset = null): void;
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
 
 interface PaginatorProviderInterface

@@ -1,4 +1,5 @@
 <?php
+
 namespace ShoppingFeed\Paginator;
 
 use ShoppingFeed\Paginator\Adapter\CurrentPageAwareInterface;
