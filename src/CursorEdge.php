@@ -9,9 +9,7 @@ class CursorEdge
 {
     private CursorInterface $cursor;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $node;
 
     public function __construct(CursorInterface $cursor, $node)

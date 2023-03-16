@@ -10,14 +10,10 @@ use ShoppingFeed\Paginator\Exception;
 
 class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
 {
-    /**
-     * @var \Iterator|\IteratorAggregate
-     */
+    /** @var \Iterator|\IteratorAggregate */
     private $traversable;
 
-    /**
-     * @param iterable|array|\Iterator|\IteratorAggregate $iterator
-     */
+    /** @param iterable|array|\Iterator|\IteratorAggregate $iterator */
     public function __construct($iterator)
     {
         if (is_array($iterator)) {
@@ -38,6 +34,7 @@ class InPlacePaginatorAdapter extends AbstractPaginatorAdapter
         }
 
         $iterator = $this->traversable;
+
         if ($iterator instanceof IteratorAggregate) {
             $iterator = $iterator->getIterator();
         }
