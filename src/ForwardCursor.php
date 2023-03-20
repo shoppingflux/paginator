@@ -18,5 +18,4 @@ class ForwardCursor extends CursorSerializable
 
         return $cursor;
     }
-
 }
