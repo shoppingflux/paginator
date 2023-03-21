@@ -31,7 +31,7 @@ class CursorSerializable implements CursorInterface
 
     public static function forward(int $limit, string $value = ''): self
     {
-        $instance = new self;
+        $instance = new self();
         $instance->setValue($value);
         $instance->setLimit($limit);
         $instance->setDirection(self::PAGE_NEXT);
