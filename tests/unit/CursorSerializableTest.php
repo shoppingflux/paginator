@@ -20,6 +20,20 @@ class CursorSerializableTest extends TestCase
         $this->assertNull($this->instance->getValue());
     }
 
+    public function testWithValue(): void
+    {
+        $cursor      = CursorSerializable::forward(20);
+        $cursorClone = $cursor->withValue('test');
+
+        $this->assertSame(20, $cursor->getLimit());
+        $this->assertSame('next', $cursor->getDirection());
+        $this->assertSame('', $cursor->getValue());
+
+        $this->assertSame(20, $cursorClone->getLimit());
+        $this->assertSame('next', $cursorClone->getDirection());
+        $this->assertSame('test', $cursorClone->getValue());
+    }
+
     public function testHydrateFromSerializedString(): void
     {
         $input    = base64_encode(json_encode(['value' => 'a', 'page' => 'next', 'limit' => 3]));
