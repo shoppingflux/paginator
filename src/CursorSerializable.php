@@ -84,6 +84,14 @@ class CursorSerializable implements CursorInterface
         return $copy;
     }
 
+    public function withValue(string $value): self
+    {
+        $cursor = clone $this;
+        $cursor->setValue($value);
+
+        return $cursor;
+    }
+
     public function getDirection(): string
     {
         return $this->direction;

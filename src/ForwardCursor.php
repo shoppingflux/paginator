@@ -10,13 +10,4 @@ class ForwardCursor extends CursorSerializable
         $this->setLimit($limit);
         $this->setDirection(self::PAGE_NEXT);
     }
-
-    public function withValue(string $value): self
-    {
-        $cursor = clone $this;
-        $cursor->setValue($value);
-
-        return $cursor;
-    }
-
 }
