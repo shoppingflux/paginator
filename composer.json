@@ -21,5 +21,10 @@
     "test": ["@phpunit", "@cs"],
     "phpunit": "vendor/bin/phpunit",
     "cs": "vendor/bin/sfcs src --progress -vvv"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

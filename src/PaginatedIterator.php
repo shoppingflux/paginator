@@ -10,9 +10,7 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
 {
     private PaginatorInterface $paginator;
 
-    /**
-     * @var callable[]
-     */
+    /** @var callable[] */
     private array $pageFilters = [];
 
     public function __construct(PaginatorInterface $paginator)
@@ -39,8 +37,10 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
                 // When filters at page level, we must run the current paginator iteration and collect results first.
                 // Its done like this because we must avoid to run the same paginator batch more than once,
                 // and by this way prevent extra load from the paginator itself (ie: SQL paginator)
+
                 if ($this->pageFilters) {
                     $items = $items->toArray();
+
                     foreach ($this->pageFilters as $filter) {
                         $items = $filter($items, $currentPage, $totalPages);
                     }

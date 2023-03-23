@@ -6,9 +6,7 @@ use ShoppingFeed\Paginator\Exception;
 
 class AbsoluteInt
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $value;
 
     public function __construct($value)
@@ -22,6 +20,7 @@ class AbsoluteInt
         }
 
         $value = (int) $value;
+
         if ($value < 0) {
             throw new Exception\DomainException('Expecting an numeric value greater than equal of 0');
         }

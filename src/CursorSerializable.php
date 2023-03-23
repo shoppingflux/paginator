@@ -29,6 +29,16 @@ class CursorSerializable implements CursorInterface
      */
     private ?string $value = null;
 
+    public static function forward(int $limit, string $value = ''): self
+    {
+        $instance = new self();
+        $instance->setValue($value);
+        $instance->setLimit($limit);
+        $instance->setDirection(self::PAGE_NEXT);
+
+        return $instance;
+    }
+
     public function toString(): string
     {
         return base64_encode(
@@ -82,6 +92,14 @@ class CursorSerializable implements CursorInterface
         $copy->setLimit($limit);
 
         return $copy;
+    }
+
+    public function withValue(string $value): self
+    {
+        $cursor = clone $this;
+        $cursor->setValue($value);
+
+        return $cursor;
     }
 
     public function getDirection(): string

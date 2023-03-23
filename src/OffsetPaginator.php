@@ -56,6 +56,7 @@ class OffsetPaginator extends AbstractPaginator implements IteratorAggregate
     public function getPrevOffset(): ?int
     {
         $offset = $this->getOffset();
+
         if (! $offset) {
             return null;
         }

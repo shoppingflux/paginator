@@ -88,6 +88,7 @@ class Paginator extends AbstractPaginator implements PaginationProviderInterface
     public function getNextPage(): ?int
     {
         $current = $this->getCurrentPage();
+
         if ($current < $this->getTotalPages()) {
             return $current + 1;
         }
@@ -98,6 +99,7 @@ class Paginator extends AbstractPaginator implements PaginationProviderInterface
     public function getPrevPage(): ?int
     {
         $prev = $this->getCurrentPage() - 1;
+
         if ($prev > 0) {
             return $prev;
         }
