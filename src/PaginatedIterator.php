@@ -58,7 +58,7 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
             }
 
             $currentPage += 1;
-            $this->paginator->setCurrentPage($currentPage);
+            $this->setCurrentPage($currentPage);
         }
     }
 
