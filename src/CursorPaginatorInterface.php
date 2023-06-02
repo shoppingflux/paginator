@@ -5,7 +5,7 @@ namespace ShoppingFeed\Paginator;
 use Iterator;
 use IteratorAggregate;
 
-interface CursorPaginatorInterface extends IteratorAggregate
+interface PaginatorInterface extends ForwardInterface
 {
     /**
      * Get the collection of elements limited by the pagination
@@ -28,16 +28,6 @@ interface CursorPaginatorInterface extends IteratorAggregate
      * Fetch the first cursor of the pagination set
      */
     public function getLastCursor(): ?CursorInterface;
-
-    /**
-     * Determine if there is a page to reach after
-     */
-    public function hasNextPage(): bool;
-
-    /**
-     * If any, fetch the next page
-     */
-    public function getNextPage(): ?self;
 
     /**
      * (Re) configure the paginator with the cursor specifications.
