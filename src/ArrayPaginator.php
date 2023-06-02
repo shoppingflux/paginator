@@ -4,7 +4,6 @@ namespace ShoppingFeed\Paginator;
 
 use ArrayIterator;
 use IteratorAggregate;
-use ShoppingFeed\Paginator\Test\Page;
 
 /**
  * This class is a simple implementation of ForwardInterface for array

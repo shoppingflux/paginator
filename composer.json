@@ -20,7 +20,8 @@
   "scripts": {
     "test": ["@phpunit", "@cs"],
     "phpunit": "vendor/bin/phpunit",
-    "cs": "vendor/bin/sfcs src --progress -vvv"
+    "cs": "vendor/bin/sfcs src --progress -vvv",
+    "csfix": "vendor/bin/sfcs src --progress -vvv --autofix"
   },
   "config": {
     "allow-plugins": {

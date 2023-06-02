@@ -3,7 +3,6 @@
 namespace ShoppingFeed\Paginator;
 
 use Iterator;
-use IteratorAggregate;
 
 interface PaginatorInterface extends ForwardInterface
 {
