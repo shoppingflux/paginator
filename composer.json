@@ -18,7 +18,8 @@
     }
   },
   "scripts": {
-    "test": ["@phpunit", "@cs"],
+    "test": ["@phplint", "@phpunit", "@cs"],
+    "phplint": "vendor/bin/phplint src --cache=build/phplint.cache",
     "phpunit": "vendor/bin/phpunit",
     "cs": "vendor/bin/sfcs src --progress -vvv",
     "csfix": "vendor/bin/sfcs src --progress -vvv --autofix"
