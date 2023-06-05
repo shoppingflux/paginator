@@ -1,8 +1,11 @@
 <?php
 
-namespace ShoppingFeed\Paginator;
+namespace unit\Cursor;
 
 use PHPUnit\Framework\TestCase;
+use ShoppingFeed\Paginator\Cursor\ArrayPages;
+use ShoppingFeed\Paginator\Cursor\CountablePageIterator;
+use ShoppingFeed\Paginator\Cursor\PageIterator;
 
 class PageIteratorTest extends TestCase
 {
@@ -31,10 +34,10 @@ class PageIteratorTest extends TestCase
             ])
         );
 
+        $this->assertCount(9, $iterator);
         $this->assertSame(
             ['item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', 'item8', 'item9'],
             iterator_to_array($iterator)
         );
-        $this->assertCount(9, $iterator);
     }
 }

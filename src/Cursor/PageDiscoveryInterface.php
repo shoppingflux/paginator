@@ -1,6 +1,6 @@
 <?php
 
-namespace ShoppingFeed\Paginator;
+namespace ShoppingFeed\Paginator\Cursor;
 
 use Traversable;
 

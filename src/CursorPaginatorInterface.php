@@ -3,6 +3,7 @@
 namespace ShoppingFeed\Paginator;
 
 use Iterator;
+use ShoppingFeed\Paginator\Cursor\PageDiscoveryInterface;
 
 interface CursorPaginatorInterface extends PageDiscoveryInterface
 {

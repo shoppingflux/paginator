@@ -1,22 +1,23 @@
 <?php
 
-namespace ShoppingFeed\Paginator;
+namespace ShoppingFeed\Paginator\Cursor;
 
 use Generator;
 use IteratorAggregate;
+use ShoppingFeed\Paginator\Exception;
 
 class PageIterator implements IteratorAggregate
 {
-    private PageDiscoveryInterface $current;
+    protected PageDiscoveryInterface $first;
 
-    public function __construct(PageDiscoveryInterface $cursor)
+    public function __construct(PageDiscoveryInterface $page)
     {
-        $this->current = $cursor;
+        $this->first = $page;
     }
 
     public function getIterator(): Generator
     {
-        $page = $this->current;
+        $page = $this->first;
 
         do {
             try {

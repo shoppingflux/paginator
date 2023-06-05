@@ -1,6 +1,6 @@
 <?php
 
-namespace ShoppingFeed\Paginator;
+namespace ShoppingFeed\Paginator\Cursor;
 
 use ArrayIterator;
 use IteratorAggregate;
@@ -11,7 +11,7 @@ use IteratorAggregate;
  * @phpstan-type Item mixed
  * @phpstan-type Page array<int, Item>
  */
-class ArrayPages implements PageDiscoveryInterface, IteratorAggregate
+class ArrayPages implements CountableCollectionInterface, IteratorAggregate
 {
     /** @var array<int, Page> Next pages */
     private array $next;
@@ -42,5 +42,19 @@ class ArrayPages implements PageDiscoveryInterface, IteratorAggregate
         }
 
         return null;
+    }
+
+    public function getTotalCount(): int
+    {
+        $total = count($this->current);
+
+        array_walk(
+            $this->next,
+            static function (array $page) use (&$total) {
+                $total += count($page);
+            }
+        );
+
+        return $total;
     }
 }
