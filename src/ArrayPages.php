@@ -6,12 +6,12 @@ use ArrayIterator;
 use IteratorAggregate;
 
 /**
- * This class is a simple implementation of ForwardInterface for array
+ * This class is a simple implementation of PageDiscoveryInterface for array
  *
  * @phpstan-type Item mixed
  * @phpstan-type Page array<int, Item>
  */
-class ArrayPaginator implements ForwardInterface, IteratorAggregate
+class ArrayPages implements PageDiscoveryInterface, IteratorAggregate
 {
     /** @var array<int, Page> Next pages */
     private array $next;
@@ -30,7 +30,7 @@ class ArrayPaginator implements ForwardInterface, IteratorAggregate
         return new ArrayIterator($this->current);
     }
 
-    public function hasNextPage(): bool
+    private function hasNextPage(): bool
     {
         return ! empty($this->next);
     }

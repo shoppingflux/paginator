@@ -4,12 +4,17 @@ namespace ShoppingFeed\Paginator;
 
 use Iterator;
 
-interface PaginatorInterface extends ForwardInterface
+interface CursorPaginatorInterface extends PageDiscoveryInterface
 {
     /**
      * Get the collection of elements limited by the pagination
      */
     public function getIterator(): Iterator;
+
+    /**
+     * Determine if there is a page to reach after
+     */
+    public function hasNextPage(): bool;
 
     /**
      * Get the collection of elements + their cursor limited by the pagination

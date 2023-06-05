@@ -4,7 +4,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.4",
-    "shoppingfeed/iterator": "^1.1",
+    "shoppingfeed/iterator": "^1.2",
     "shoppingfeed/exception": "^1.0"
   },
   "require-dev": {
