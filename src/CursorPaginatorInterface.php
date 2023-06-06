@@ -13,11 +13,6 @@ interface CursorPaginatorInterface extends PageDiscoveryInterface
     public function getIterator(): Iterator;
 
     /**
-     * Determine if there is a page to reach after
-     */
-    public function hasNextPage(): bool;
-
-    /**
      * Get the collection of elements + their cursor limited by the pagination
      *
      * @return \Iterator|CursorEdge[]
@@ -30,9 +25,14 @@ interface CursorPaginatorInterface extends PageDiscoveryInterface
     public function getFirstCursor(): ?CursorInterface;
 
     /**
-     * Fetch the first cursor of the pagination set
+     * Fetch the last cursor of the pagination set
      */
     public function getLastCursor(): ?CursorInterface;
+
+    /**
+     * Determine if there is a page to reach after
+     */
+    public function hasNextPage(): bool;
 
     /**
      * (Re) configure the paginator with the cursor specifications.
@@ -45,9 +45,4 @@ interface CursorPaginatorInterface extends PageDiscoveryInterface
      * Inform about the number of items that the current page handle
      */
     public function getItemsPerPage(): int;
-
-    /**
-     * The total number of elements that matched
-     */
-    public function getTotalCount(): int;
 }

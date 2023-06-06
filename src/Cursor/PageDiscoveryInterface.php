@@ -13,4 +13,9 @@ interface PageDiscoveryInterface extends Traversable
      * If any, fetch the next page
      */
     public function getNextPage(): ?self;
+
+    /**
+     * Get the total number of items for all remaining pages
+     */
+    public function getTotalCount(): int;
 }

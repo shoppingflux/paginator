@@ -4,9 +4,13 @@ namespace ShoppingFeed\Paginator\Cursor;
 
 use Generator;
 use IteratorAggregate;
+use ShoppingFeed\Iterator\CountableTraversable;
 use ShoppingFeed\Paginator\Exception;
 
-class PageIterator implements IteratorAggregate
+/**
+ * Cursor Paginator allow to iterate over a list of result
+ */
+class Paginator implements IteratorAggregate, CountableTraversable
 {
     protected PageDiscoveryInterface $first;
 
@@ -28,5 +32,10 @@ class PageIterator implements IteratorAggregate
                 break;
             }
         } while ($page = $page->getNextPage());
+    }
+
+    public function count(): int
+    {
+        return $this->first->getTotalCount();
     }
 }
