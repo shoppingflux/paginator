@@ -4,7 +4,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.4",
-    "shoppingfeed/iterator": "^1.1",
+    "shoppingfeed/iterator": "^1.2",
     "shoppingfeed/exception": "^1.0"
   },
   "require-dev": {
@@ -18,9 +18,11 @@
     }
   },
   "scripts": {
-    "test": ["@phpunit", "@cs"],
+    "test": ["@phplint", "@phpunit", "@cs"],
+    "phplint": "vendor/bin/phplint src --cache=build/phplint.cache",
     "phpunit": "vendor/bin/phpunit",
-    "cs": "vendor/bin/sfcs src --progress -vvv"
+    "cs": "vendor/bin/sfcs src --progress -vvv",
+    "csfix": "vendor/bin/sfcs src --progress -vvv --autofix"
   },
   "config": {
     "allow-plugins": {
