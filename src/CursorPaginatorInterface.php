@@ -8,11 +8,6 @@ use ShoppingFeed\Paginator\Cursor\PageDiscoveryInterface;
 interface CursorPaginatorInterface extends PageDiscoveryInterface
 {
     /**
-     * Get the collection of elements limited by the pagination
-     */
-    public function getIterator(): Iterator;
-
-    /**
      * Get the collection of elements + their cursor limited by the pagination
      *
      * @return \Iterator|CursorEdge[]
