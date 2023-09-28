@@ -11,7 +11,7 @@ use IteratorAggregate;
  * @phpstan-type Item mixed
  * @phpstan-type Page array<int, Item>
  */
-class ArrayPages implements PageDiscoveryInterface, IteratorAggregate
+class ArrayPages implements PageDiscoveryInterface
 {
     /** @var array<int, Page> Next pages */
     private array $next;
