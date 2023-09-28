@@ -3,7 +3,6 @@
 namespace ShoppingFeed\Paginator\Cursor;
 
 use ArrayIterator;
-use IteratorAggregate;
 
 /**
  * This class is a simple implementation of PageDiscoveryInterface for array
@@ -52,7 +51,7 @@ class ArrayPages implements PageDiscoveryInterface
             $this->next,
             static function (array $page) use (&$total) {
                 $total += count($page);
-            }
+            },
         );
 
         return $total;
