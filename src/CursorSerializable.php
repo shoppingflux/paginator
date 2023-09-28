@@ -46,7 +46,7 @@ class CursorSerializable implements CursorInterface
                 self::PROP_VALUE     => $this->getValue(),
                 self::PROP_DIRECTION => $this->getDirection(),
                 self::PROP_LIMIT     => $this->getLimit(),
-            ], JSON_THROW_ON_ERROR)
+            ], JSON_THROW_ON_ERROR),
         );
     }
 
@@ -64,7 +64,7 @@ class CursorSerializable implements CursorInterface
         if (! $decoded = base64_decode($serialized)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s : value is not a valid base64 string.',
-                $serialized
+                $serialized,
             ));
         }
 
@@ -74,7 +74,7 @@ class CursorSerializable implements CursorInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 'Json decoding failed for "%s" : %s',
                 $serialized,
-                $exception->getMessage()
+                $exception->getMessage(),
             ));
         }
 
@@ -126,7 +126,7 @@ class CursorSerializable implements CursorInterface
     {
         if (! in_array($direction, self::DIRECTIONS, true)) {
             throw new Exception\InvalidArgumentException(
-                'Invalid direction given, it must be one of the following: ' . implode(', ', self::DIRECTIONS)
+                'Invalid direction given, it must be one of the following: ' . implode(', ', self::DIRECTIONS),
             );
         }
 
@@ -137,7 +137,7 @@ class CursorSerializable implements CursorInterface
     {
         if ($limit < 0) {
             throw new Exception\InvalidArgumentException(
-                'Invalid limit given, it must be an integer greater than or equal to 0'
+                'Invalid limit given, it must be an integer greater than or equal to 0',
             );
         }
 

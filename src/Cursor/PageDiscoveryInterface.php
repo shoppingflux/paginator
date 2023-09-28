@@ -2,12 +2,12 @@
 
 namespace ShoppingFeed\Paginator\Cursor;
 
-use Traversable;
+use IteratorAggregate;
 
 /**
  * This interface allow to get next page from the current page
  */
-interface PageDiscoveryInterface extends Traversable
+interface PageDiscoveryInterface extends IteratorAggregate
 {
     /**
      * If any, fetch the next page

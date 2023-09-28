@@ -68,7 +68,7 @@ class OffsetPaginator extends AbstractPaginator implements IteratorAggregate
     {
         $this->adapter->limit(
             $this->limit,
-            $this->offset
+            $this->offset,
         );
     }
 }
