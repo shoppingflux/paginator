@@ -13,6 +13,9 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
     /** @var callable[] */
     private array $pageFilters = [];
 
+    /** @var ?callable  */
+    private $pageFlusher = null;
+
     public function __construct(PaginatorInterface $paginator)
     {
         $this->paginator = $paginator;
@@ -51,6 +54,10 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
                 }
             } catch (Exception\BreakIterationException $exception) {
                 break;
+            }
+
+            if ($this->pageFlusher) {
+                ($this->pageFlusher)();
             }
 
             if ($currentPage === $totalPages) {
@@ -140,6 +147,18 @@ class PaginatedIterator extends AbstractIterator implements PaginatorInterface
     public function addPageFilter(callable $processor): self
     {
         $this->pageFilters[] = $processor;
+
+        return $this;
+    }
+
+    /**
+     * Page flusher applies at the end of every page before going to the next one
+     *
+     * @return $this
+     */
+    public function addPageFlusher(callable $callable): self
+    {
+        $this->pageFlusher = $callable;
 
         return $this;
     }
