@@ -200,5 +200,22 @@ class PaginatedIteratorTest extends TestCase
             [1, [4, 5, 6]],
         ];
     }
+
+    public function testPageFlush(): void
+    {
+        $actualFlush = 0;
+        $items       = array_fill(0, 10, 0);
+
+        $instance = PaginatedIterator::withAdapter(new InPlacePaginatorAdapter($items));
+        $instance->setItemsPerPage(3);
+        $instance->addPageFlusher(function () use (&$actualFlush) {
+            $actualFlush++;
+        });
+
+        $result = iterator_to_array($instance);
+
+        $this->assertSame($items, $result);
+        $this->assertSame(4, $actualFlush);
+    }
 }
 
