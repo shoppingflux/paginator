@@ -5,11 +5,12 @@
   "require": {
     "php": ">=7.4",
     "shoppingfeed/iterator": "^1.2",
-    "shoppingfeed/exception": "^1.0"
+    "shoppingfeed/exception": "^1.0",
+    "symfony/event-dispatcher": "^5.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3.8",
-    "shoppingfeed/coding-style-php": "^2.0",
+    "shoppingfeed/coding-style-php": "2.3.11",
     "overtrue/phplint": "^1.1"
   },
   "autoload": {
@@ -18,11 +19,11 @@
     }
   },
   "scripts": {
-    "test": ["@phplint", "@phpunit", "@cs"],
+    "test": ["@phplint", "@phpunit", "@phpcs"],
     "phplint": "vendor/bin/phplint src --cache=build/phplint.cache",
     "phpunit": "vendor/bin/phpunit",
-    "cs": "vendor/bin/sfcs src --progress -vvv",
-    "csfix": "vendor/bin/sfcs src --progress -vvv --autofix"
+    "phpcs": "vendor/bin/sfcs src --progress -vvv",
+    "phpcsfix": "vendor/bin/sfcs src --progress -vvv --autofix"
   },
   "config": {
     "allow-plugins": {
