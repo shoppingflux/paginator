@@ -3,19 +3,12 @@
 namespace unit\Cursor;
 
 use PHPUnit\Framework\TestCase;
-use ShoppingFeed\Event\Event;
-use ShoppingFeed\Event\EventDispatcher;
-use ShoppingFeed\Event\EventInterface;
-use ShoppingFeed\Event\Test\EventDispatcherTracer;
-use ShoppingFeed\Event\Test\EventTestCaseTrait;
 use ShoppingFeed\Paginator\Cursor\ArrayPages;
-use ShoppingFeed\Paginator\Cursor\CountablePageIterator;
+use ShoppingFeed\Paginator\Cursor\PageScrolledEvent;
 use ShoppingFeed\Paginator\Cursor\Paginator;
 
 class PaginatorTest extends TestCase
 {
-    use EventTestCaseTrait;
-
     private Paginator $paginator;
 
     public function setUp(): void
@@ -26,7 +19,6 @@ class PaginatorTest extends TestCase
                 ['item4', 'item5', 'item6'],
                 ['item7', 'item8', 'item9'],
             ]),
-            new EventDispatcher()
         );
     }
 
@@ -38,16 +30,16 @@ class PaginatorTest extends TestCase
             iterator_to_array($this->paginator)
         );
     }
-    public function testEventDispatcher(): void
+    public function testEventsAreDispatched(): void
     {
         $pages = [];
 
         $this->paginator
-            ->getListenerRegistry()
-            ->bind(
-                Paginator::EVENT_PAGE_SCROLLED,
-                function (EventInterface $event) use (&$pages) {
-                    $pages[] = $event->getParam('page');
+            ->getEventDispatcher()
+            ->addListener(
+                PageScrolledEvent::NAME,
+                function (PageScrolledEvent $event) use (&$pages) {
+                    $pages[] = $event->getPage();
                 }
             );
 

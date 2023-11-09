@@ -4,48 +4,33 @@ namespace ShoppingFeed\Paginator\Cursor;
 
 use Generator;
 use IteratorAggregate;
-use ShoppingFeed\Event\Event;
-use ShoppingFeed\Event\EventDispatcher;
-use ShoppingFeed\Event\EventDispatcherInterface;
-use ShoppingFeed\Event\ListenerRegistryInterface;
-use ShoppingFeed\Exception\InvalidArgumentException;
 use ShoppingFeed\Iterator\CountableTraversable;
 use ShoppingFeed\Paginator\Exception;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Cursor Paginator allow to iterate over a list of result
  */
 class Paginator implements IteratorAggregate, CountableTraversable
 {
-    public const EVENT_PAGE_SCROLLED = 'paginator.page.scrolled';
-
     protected PageDiscoveryInterface $first;
 
-    /** @var (EventDispatcherInterface&ListenerRegistryInterface)|null */
     protected EventDispatcherInterface $dispatcher;
 
-    /**
-     * @param (EventDispatcherInterface&ListenerRegistryInterface)|null $dispatcher
-     */
     public function __construct(
         PageDiscoveryInterface $page,
-        EventDispatcherInterface $dispatcher = null,
+        EventDispatcherInterface $dispatcher = null
     ) {
         if (null === $dispatcher) {
             $dispatcher = new EventDispatcher();
-        }
-
-        if (! $dispatcher instanceof ListenerRegistryInterface) {
-            throw new InvalidArgumentException(
-                'Dispatcher must be instance of ' . ListenerRegistryInterface::class,
-            );
         }
 
         $this->first      = $page;
         $this->dispatcher = $dispatcher;
     }
 
-    public function getListenerRegistry(): ListenerRegistryInterface
+    public function getEventDispatcher(): EventDispatcher
     {
         return $this->dispatcher;
     }
@@ -64,11 +49,7 @@ class Paginator implements IteratorAggregate, CountableTraversable
                 break;
             }
 
-            $this->dispatcher->trigger(
-                new Event(self::EVENT_PAGE_SCROLLED, [
-                    'page' => ++$number,
-                ]),
-            );
+            $this->dispatcher->dispatch(new PageScrolledEvent(++$number), PageScrolledEvent::NAME);
         } while ($page = $page->getNextPage());
     }
 
