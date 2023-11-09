@@ -7,28 +7,26 @@ on:
     branches: [ master ]
 
 jobs:
-  check:
+  build:
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php_version: [ 8.0, 8.1 ]
-    container:
-      image: ghcr.io/shoppingflux/php:${{ matrix.php_version }}-fpm
-      env:
-        COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-      credentials:
-        username: ${{ secrets.CR_USER }}
-        password: ${{ secrets.CR_PAT }}
+        phpv: [ 8.0, 8.1 ]
+
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.phpv }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
-      - name: Run test script
+      - name: Run test suite
         run: composer test
