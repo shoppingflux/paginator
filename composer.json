@@ -6,7 +6,7 @@
     "php": ">=7.4",
     "shoppingfeed/iterator": "^1.2",
     "shoppingfeed/exception": "^1.0",
-    "symfony/event-dispatcher": "^5.4"
+    "symfony/event-dispatcher": "^5.4|^6.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3.8",
