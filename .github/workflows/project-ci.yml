@@ -1,4 +1,4 @@
-name: Unit tests & static analysis
+name: PHP Composer
 
 on:
   push:
@@ -7,28 +7,26 @@ on:
     branches: [ master ]
 
 jobs:
-  check:
+  build:
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
         phpv: [ "8.0", "8.1", "8.2", "8.3" ]
-    container:
-      image: ghcr.io/shoppingflux/php:${{ matrix.phpv }}-unit
-      env:
-        COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-      credentials:
-        username: ${{ secrets.CR_USER }}
-        password: ${{ secrets.CR_PAT }}
+
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.phpv }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
-      - name: Run test script
+      - name: Run test suite
         run: composer test
