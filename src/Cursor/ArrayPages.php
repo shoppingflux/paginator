@@ -24,6 +24,7 @@ class ArrayPages implements PageDiscoveryInterface
         $this->next    = $pages;
     }
 
+    #[\ReturnTypeWillChange] // phpcs:ignore
     public function getIterator()
     {
         return new ArrayIterator($this->current);

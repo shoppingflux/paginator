@@ -19,9 +19,9 @@ docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
 
 ### Contributing
 
-To connect to a php 7.4 container correctly configured
+To connect to a php 8.0 container correctly configured
 
-- Create a container : `docker run --name paginator-php -v $PWD:/var/www -d ghcr.io/shoppingflux/php:7.4.16-fpm`
+- Create a container : `docker run --name paginator-php -v $PWD:/var/www -d ghcr.io/shoppingflux/php:8.0-unit`
 - Connect to container : `docker exec -it paginator-php bash`
 
 Once connected to the container you can :

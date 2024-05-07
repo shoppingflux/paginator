@@ -1,0 +1,101 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Cannot call method toInt\\(\\) on ShoppingFeed\\\\Paginator\\\\Value\\\\AbsoluteInt\\|null\\.$#"
+			count: 1
+			path: src/Adapter/AbstractPaginatorAdapter.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Adapter\\\\AbstractPaginatorAdapter\\:\\:getTotalPages\\(\\) should return int but returns int\\|null\\.$#"
+			count: 1
+			path: src/Adapter/AbstractPaginatorAdapter.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Adapter\\\\AbstractPaginatorAdapter\\:\\:limit\\(\\) has parameter \\$limit with no type specified\\.$#"
+			count: 1
+			path: src/Adapter/AbstractPaginatorAdapter.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Adapter\\\\AbstractPaginatorAdapter\\:\\:limit\\(\\) has parameter \\$offset with no type specified\\.$#"
+			count: 1
+			path: src/Adapter/AbstractPaginatorAdapter.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Adapter\\\\AbstractPaginatorAdapter\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Adapter/AbstractPaginatorAdapter.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Adapter\\\\InPlacePaginatorAdapter\\:\\:__construct\\(\\) has parameter \\$iterator with no value type specified in iterable type iterable\\.$#"
+			count: 1
+			path: src/Adapter/InPlacePaginatorAdapter.php
+
+		-
+			message: "#^Parameter \\#1 \\$iterator of class LimitIterator constructor expects TIterator of Iterator\\<TKey, TValue\\>, Traversable\\<mixed, mixed\\> given\\.$#"
+			count: 1
+			path: src/Adapter/InPlacePaginatorAdapter.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Adapter\\\\PaginatorAdapterInterface\\:\\:limit\\(\\) has parameter \\$limit with no type specified\\.$#"
+			count: 1
+			path: src/Adapter/PaginatorAdapterInterface.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Adapter\\\\PaginatorAdapterInterface\\:\\:limit\\(\\) has parameter \\$offset with no type specified\\.$#"
+			count: 1
+			path: src/Adapter/PaginatorAdapterInterface.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Cursor\\\\ArrayPages\\:\\:__construct\\(\\) has parameter \\$pages with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Cursor/ArrayPages.php
+
+		-
+			message: "#^Interface ShoppingFeed\\\\Paginator\\\\Cursor\\\\PageDiscoveryInterface extends generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Cursor/PageDiscoveryInterface.php
+
+		-
+			message: "#^Class ShoppingFeed\\\\Paginator\\\\Cursor\\\\Paginator implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Cursor/Paginator.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Cursor\\\\Paginator\\:\\:getEventDispatcher\\(\\) should return Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcher but returns Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface\\.$#"
+			count: 1
+			path: src/Cursor/Paginator.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\CursorEdge\\:\\:__construct\\(\\) has parameter \\$node with no type specified\\.$#"
+			count: 1
+			path: src/CursorEdge.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\CursorEdge\\:\\:getNode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/CursorEdge.php
+
+		-
+			message: "#^Class ShoppingFeed\\\\Paginator\\\\OffsetPaginator implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/OffsetPaginator.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\OffsetPaginator\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OffsetPaginator.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Paginator\\:\\:getItemsPerPage\\(\\) should return int but returns int\\|null\\.$#"
+			count: 1
+			path: src/Paginator.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Paginator\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Paginator.php
+
+		-
+			message: "#^Method ShoppingFeed\\\\Paginator\\\\Value\\\\AbsoluteInt\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/Value/AbsoluteInt.php

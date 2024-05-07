@@ -20,7 +20,7 @@ class Paginator implements IteratorAggregate, CountableTraversable
 
     public function __construct(
         PageDiscoveryInterface $page,
-        EventDispatcherInterface $dispatcher = null
+        EventDispatcherInterface $dispatcher = null,
     ) {
         if (null === $dispatcher) {
             $dispatcher = new EventDispatcher();
