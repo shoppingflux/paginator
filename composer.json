@@ -11,7 +11,8 @@
   "require-dev": {
     "overtrue/phplint": "^9.0",
     "phpunit/phpunit": "^9.3",
-    "shoppingfeed/coding-style-php": "^2.3"
+    "shoppingfeed/coding-style-php": "^2.3",
+    "phpstan/phpstan": "^1.10"
   },
   "autoload": {
     "psr-4": {
@@ -22,8 +23,9 @@
     "phplint": "vendor/bin/phplint src --cache=build/phplint.cache",
     "phpcs": "vendor/bin/sfcs src --progress -vvv",
     "phpcsfix": "vendor/bin/sfcs src --progress -vvv --autofix",
+    "phpstan": "vendor/bin/phpstan analyse --memory-limit=1G",
     "phpunit": "vendor/bin/phpunit",
-    "test": ["@phplint", "@phpunit", "@phpcs"]
+    "test": ["@phplint", "@phpunit", "@phpstan", "@phpcs"]
   },
   "config": {
     "allow-plugins": {
