@@ -28,4 +28,14 @@ interface CursorInterface
      * Can be either before or after
      */
     public function getDirection(): string;
+
+    /**
+     * Create a new cursor for next pagination with the given value
+     */
+    public static function forward(int $limit, string $value = ''): self;
+
+    /**
+     * Create a new cursor for previous pagination with the given value
+     */
+    public static function backward(int $limit, string $value = ''): self;
 }
