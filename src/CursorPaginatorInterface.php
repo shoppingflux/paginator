@@ -25,11 +25,6 @@ interface CursorPaginatorInterface extends PageDiscoveryInterface
     public function getLastCursor(): ?CursorInterface;
 
     /**
-     * Fetch the current cursor set
-     */
-    public function getCurrentCursor(): CursorInterface;
-
-    /**
      * Determine if there is a page to reach after
      */
     public function hasNextPage(): bool;
