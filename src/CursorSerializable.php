@@ -39,16 +39,6 @@ class CursorSerializable implements CursorInterface
         return $instance;
     }
 
-    public static function backward(int $limit, string $value = ''): self
-    {
-        $instance = new self();
-        $instance->setValue($value);
-        $instance->setLimit($limit);
-        $instance->setDirection(self::PAGE_PREV);
-
-        return $instance;
-    }
-
     public function toString(): string
     {
         return base64_encode(
