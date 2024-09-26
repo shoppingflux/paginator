@@ -3,7 +3,7 @@
   "description": "Paginator library",
   "license": "MIT",
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.1",
     "shoppingfeed/iterator": "^1.2",
     "shoppingfeed/exception": "^1.0",
     "symfony/event-dispatcher": "^5.4 || ^6.0 || ^7.0"
