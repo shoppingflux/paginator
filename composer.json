@@ -3,16 +3,16 @@
   "description": "Paginator library",
   "license": "MIT",
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.2",
     "shoppingfeed/iterator": "^1.2",
     "shoppingfeed/exception": "^1.0",
     "symfony/event-dispatcher": "^5.4 || ^6.0 || ^7.0"
   },
   "require-dev": {
     "overtrue/phplint": "^9.0",
-    "phpunit/phpunit": "^9.3",
+    "phpunit/phpunit": "^10.0",
     "shoppingfeed/coding-style-php": "^2.3",
-    "phpstan/phpstan": "^1.10"
+    "phpstan/phpstan": "^2.1"
   },
   "autoload": {
     "psr-4": {
